@@ -1,0 +1,84 @@
+/*
+ * To start with, we hide *all* elements that might give a clue
+ * about inbox status. We must do this before InboxWhenReady loads,
+ * otherwise there might be a brief flash of inbox status clues
+ * just after Gmail loads.
+ */
+.aeF,
+.Di,
+.aeN .ajl,
+.aeV
+.aeG {
+  visibility: hidden !important; /* important rules override native view logic */
+}
+
+/*
+ * The .iwr-active class is appended to body when InboxWhenReady
+ * has loaded.
+ */
+.iwr-active .aeF,
+.iwr-active .Di,
+.iwr-active .aeN .ajl,
+.iwr-active .aeV
+.iwr-active .aeG {
+  visibility: visible !important;
+}
+
+/*
+ * The .iwr-hide-email-view class is appended to body when the user
+ * does not want to see their inbox AND they are on the #inbox view.
+ */
+.iwr-active.iwr-hide-email-view .aeF,
+.iwr-active.iwr-hide-email-view .Di,
+.iwr-active.iwr-hide-email-view .aeV {
+  visibility: hidden !important;
+}
+
+.iwr-active.iwr-hide-email-view .aeF {
+  display: none !important;
+}
+
+/*
+ * Reposition the "Terms" and "Privacy" links
+ */
+/*
+.iwr-active.iwr-hide-email-view .aeG {
+  position: fixed;
+  top: 110px;
+}
+*/
+
+
+/**
+ * Control visibility of the show / hide inbox buttons added
+ * to the DOM by this extension.
+ */
+#show_my_inbox {
+  display: none !important;
+}
+
+.iwr-active.iwr-hide-email-view #show_my_inbox {
+  display: inline-block !important;
+}
+
+#hide_my_inbox {
+  display: inline-block !important;
+}
+
+.iwr-active.iwr-hide-email-view #hide_my_inbox {
+  display: none !important;
+}
+
+/*
+#inbox_link_without_unread_count {
+  display: none;
+}
+
+.iwr-active.iwr-hide-email-view #inbox_when_ready_folder_selector > :first-child {
+  display: none;
+}
+
+.iwr-active.iwr-hide-email-view #inbox_link_without_unread_count {
+  display: inline-block;
+}
+*/
