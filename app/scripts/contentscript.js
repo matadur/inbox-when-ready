@@ -128,6 +128,10 @@ InboxWhenReady.prototype.updateView = function() {
   }
   else {
     InboxWhenReady.state.inboxViewIsActive = false;
+
+    if(InboxWhenReady.state.inboxHidden === true) {
+      InboxWhenReady.showEmailView();
+    }
   }
 
   if (location.hash.indexOf('#settings') === 0) {
@@ -143,8 +147,6 @@ InboxWhenReady.prototype.updateView = function() {
         clearInterval(InboxWhenReady.state.actionBarIsLoaded);
       }
     }, 500);
-
-
   }
 };
 
