@@ -25,6 +25,3 @@ https://chrome.google.com/webstore/detail/chrome-extension-source-v/jifpbeccnghk
 
 Please raise issues on GitHub:
 https://github.com/peterhartree/inbox-when-ready
-
-Or Tweet:
-@InboxWhenReady
