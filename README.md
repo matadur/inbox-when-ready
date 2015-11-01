@@ -14,12 +14,19 @@ If you're into batch processing or the Pomodoro focus technique, this extension 
 
 If you're okay being frequently interrupted, or you have a job that obliges you to deal with new email very quickly, this extension probably isn't for you.
 
+### How can I use this?
+
+Install the extension by visting the [Chrome web store](https://chrome.google.com/webstore/detail/inbox-when-ready/cdedhgmbfjhobfnphaoihdfmnjidcpim?hl=en&gl=001) and clicking "Add to Chrome".
+
 ### What about my privacy?
 
 Good question. The extension requests the minimum permission it requires in order to add the "show / hide inbox" feature to Gmail. The extension does not and never will read your emails or other personal data.
 
-The technical among you are encouraged to review the full source on GitHub, or, better, view the compiled extension source by using this extension:
-https://chrome.google.com/webstore/detail/chrome-extension-source-v/jifpbeccnghkjeaalbbjmodiffmgedin?hl=en
+The technical among you are encouraged to review the full source on GitHub, or, better, view the compiled extension source by using the [Chrome Source Extension Viewer](Chrome extension source viewer).
+
+### Changelog
+
+See [CHANGELOG.md](CHANGELOG.md)
 
 ### Bugs, feature requests and contributions
 
