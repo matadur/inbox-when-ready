@@ -2,8 +2,10 @@
  * To start with, we hide *all* elements that might give a clue
  * about inbox status. We must do this before InboxWhenReady loads,
  * otherwise there might be a brief flash of inbox status clues
- * just after Gmail loads.
+ * just after the app loads.
  */
+
+/* Selectors for Gmail */
 .aeF,
 .Di,
 .aeN .ajl,
@@ -12,10 +14,16 @@
   visibility: hidden !important; /* important rules override native view logic */
 }
 
+/* Selectors for InboxByGmail */
+.tE {
+  opacity: 0 !important; /* important rules override native view logic */
+}
+
 /*
  * The .iwr-active class is appended to body when InboxWhenReady
  * has loaded.
  */
+/* Selectors for Gmail */
 .iwr-active .aeF,
 .iwr-active .Di,
 .iwr-active .aeN .ajl,
@@ -24,30 +32,30 @@
   visibility: visible !important;
 }
 
+/* Selectors for InboxByGmail */
+.iwr-active .tE {
+  opacity: 1 !important; /* important rules override native view logic */
+}
+
 /*
  * The .iwr-hide-email-view class is appended to body when the user
  * does not want to see their inbox AND they are on the #inbox view.
  */
+ /* Selectors for Gmail */
 .iwr-active.iwr-hide-email-view .aeF,
 .iwr-active.iwr-hide-email-view .Di,
 .iwr-active.iwr-hide-email-view .aeV {
   visibility: hidden !important;
 }
 
+/* Selectors for InboxByGmail */
+.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .tE {
+  opacity: 0 !important;
+}
+
 .iwr-active.iwr-hide-email-view .aeF {
   display: none !important;
 }
-
-/*
- * Reposition the "Terms" and "Privacy" links
- */
-/*
-.iwr-active.iwr-hide-email-view .aeG {
-  position: fixed;
-  top: 110px;
-}
-*/
-
 
 /**
  * Control visibility of the show / hide inbox buttons added
@@ -69,16 +77,19 @@
   display: none !important;
 }
 
-/*
-#inbox_link_without_unread_count {
-  display: none;
+/* Show/hide buttons for InboxByGmail */
+.iwr-inbox-view-active #nP > #show_my_inbox, .iwr-inbox-view-active #nP > #hide_my_inbox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  margin-left: -75px;
+  padding: 5px;
+  z-index: 10;
+  text-align: center;
 }
 
-.iwr-active.iwr-hide-email-view #inbox_when_ready_folder_selector > :first-child {
-  display: none;
+.iwr-inbox-view-active #nP > #hide_my_inbox {
+  top: 72px;
+  position: absolute;
 }
-
-.iwr-active.iwr-hide-email-view #inbox_link_without_unread_count {
-  display: inline-block;
-}
-*/
