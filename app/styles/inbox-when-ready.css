@@ -14,6 +14,16 @@
   visibility: hidden !important; /* important rules override native view logic */
 }
 
+/* We should not hide view components if the user has browse directly to an individual
+email. */
+.xE .aeF,
+.xE .Di,
+.xE .aeN .ajl,
+.xE .aeV
+.xE .aeG {
+  visibility: visible !important;
+}
+
 /* Selectors for InboxByGmail */
 .tE {
   opacity: 0 !important; /* important rules override native view logic */
