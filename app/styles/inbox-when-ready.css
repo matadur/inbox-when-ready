@@ -62,7 +62,19 @@ email. */
 .iwr-active.iwr-hide-email-view.iwr-inbox-view-active .tE {
   opacity: 0 !important;
 }
+/* Do show pinned messages */
+.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .ay .tE {
+  opacity: 1 !important;
+}
 
+.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .ay #show_my_inbox,
+.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .ay #hide_my_inbox {
+  display: none !important;
+}
+
+.iwr-active.iwr-hide-email-view .aeF {
+  display: none !important;
+}
 
 /**
  * Control visibility of the show / hide inbox buttons added
