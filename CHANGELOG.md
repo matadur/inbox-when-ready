@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.2] - 2015-11-04
+### Changed
+- Pinned items view should not be affected by this plugin (i.e. pinned items should be visible via toggle button even when inbox is hidden).
+
+### Fixed
+- Show / hide buttons not visible for some users. Fixes #1.
+
 ## [1.1.1] - 2015-11-01
 ### Changed
 - Remove unnecessary "tabs" permission request from extension manifest

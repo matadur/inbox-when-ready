@@ -63,15 +63,13 @@ email. */
   opacity: 0 !important;
 }
 
-.iwr-active.iwr-hide-email-view .aeF {
-  display: none !important;
-}
 
 /**
  * Control visibility of the show / hide inbox buttons added
  * to the DOM by this extension.
  */
-#show_my_inbox {
+#show_my_inbox,
+#hide_my_inbox {
   display: none !important;
 }
 
@@ -79,7 +77,7 @@ email. */
   display: inline-block !important;
 }
 
-#hide_my_inbox {
+.iwr-inbox-view-active #hide_my_inbox {
   display: inline-block !important;
 }
 
@@ -88,18 +86,18 @@ email. */
 }
 
 /* Show/hide buttons for InboxByGmail */
-.iwr-inbox-view-active #nP > #show_my_inbox, .iwr-inbox-view-active #nP > #hide_my_inbox {
+.iwr-inbox-view-active .c4 > #show_my_inbox, .iwr-inbox-view-active .c4 > #hide_my_inbox {
   position: fixed;
   top: 50%;
   left: 50%;
   width: 150px;
   margin-left: -75px;
   padding: 5px;
-  z-index: 10;
+  z-index: 18; /* Compose dialog has z-index 19 */
   text-align: center;
 }
 
-.iwr-inbox-view-active #nP > #hide_my_inbox {
+.iwr-inbox-view-active .c4 > #hide_my_inbox {
   top: 72px;
   position: absolute;
 }
