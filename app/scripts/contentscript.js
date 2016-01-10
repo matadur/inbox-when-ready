@@ -4,7 +4,7 @@ function InboxWhenReady() {
   this.state = {};
   this.state.app = null; // InboxByGmail or Gmail
   this.state.appIsLoaded = false;
-  this.state.inboxViewIsActive = false;
+  this.state.activeView = null;
   this.state.inboxHidden = true;
   this.state.actionBarIsLoaded = false;
   this.state.inboxLabelChecker = false;
@@ -46,12 +46,16 @@ InboxWhenReady.prototype.getDomElement = function(selector,match) {
 };
 
 InboxWhenReady.prototype.init = function() {
+
+
   // Are we using Gmail or InboxByGmail?
   this.setApp();
 
   // Load selectors for relevant parts of the DOM. These vary, of course,
   // depending on whether we're using Gmail or Inbox by Gmail
   this.setDomSelectors();
+
+  this.setActiveView();
 
   this.state.appIsLoaded = setInterval(function() {
 
@@ -60,13 +64,27 @@ InboxWhenReady.prototype.init = function() {
     // If we found the DOM element we were looking for, we know the app has loaded.
     if(InboxWhenReady.dom.$inboxLink !== false) {
 
+      InboxWhenReady.dom.$documentBody = InboxWhenReady.getDomElement('body');
+
       clearInterval(InboxWhenReady.state.appIsLoaded);
 
-      // Select the other DOM elements we need to manipulate.
-      InboxWhenReady.selectDomElements();
+      // Is the inbox view active?
+      if (InboxWhenReady.isInboxViewActive()) {
+        // Select the other DOM elements we need to manipulate.
+        InboxWhenReady.selectDomElements();
 
-      // Add show / hide inbox buttons to the DOM
-      InboxWhenReady.addButtons();
+        // Add show / hide inbox buttons to the DOM
+        InboxWhenReady.addButtons();
+      }
+      else {
+        // Inbox view is not active. We'll have to call selectDomElements and addButtons() again when
+        // the user returns to this view.
+        InboxWhenReady.state.mustReInit = true;
+
+        if(InboxWhenReady.state.app === 'InboxByGmail') {
+          // @TODO we can't bind to html5history, so we must poll location and reinitialise when it changes
+        }
+      }
 
       // Set inbox status to hidden (that's the intended default state).
       InboxWhenReady.hideInbox();
@@ -76,14 +94,6 @@ InboxWhenReady.prototype.init = function() {
       // be initialising on a view that isn't the inbox.
       // (e.g. https://mail.google.com/mail/u/0/#sent)
       InboxWhenReady.updateView();
-
-      //@TODO
-      if (InboxWhenReady.state.app === 'Gmail' && location.hash !== '#inbox') {
-        console.log('location hash wasnt #inbox. was: ' + location.hash);
-        // If the user navigates to settings page, there's a major DOM update.
-        // So, we'll need to initialise again once they return to an inbox view.
-        InboxWhenReady.state.mustReInit = true;
-      }
 
       // Listen for changes in app state.
       InboxWhenReady.bindListeners();
@@ -117,8 +127,48 @@ InboxWhenReady.prototype.setDomSelectors = function() {
   }
 };
 
+InboxWhenReady.prototype.setActiveView = function() {
+  if(this.state.app === 'InboxByGmail') {
+    this.state.activeView = window.location.pathname;
+  }
+  else if(this.state.app === 'Gmail') {
+    this.state.activeView = location.hash;
+  }
+};
+
+InboxWhenReady.prototype.isInboxViewActive = function() {
+  if(InboxWhenReady.isGmailInboxViewActive() || InboxWhenReady.isInboxByGmailInboxViewActive()) {
+    console.log('inbox view is active');
+    return true;
+  }
+  else {
+    return false;
+  }
+};
+
+InboxWhenReady.prototype.isGmailInboxViewActive = function() {
+  if(this.state.activeView === '#inbox') {
+    return true;
+  }
+  else {
+    return false;
+  }
+};
+
+InboxWhenReady.prototype.isInboxByGmailInboxViewActive = function() {
+  if(window.location.pathname.length === 5) {
+    return true;
+  }
+  else {
+    return false;
+  }
+};
+
+
+
+
 InboxWhenReady.prototype.selectDomElements = function() {
-  InboxWhenReady.dom.$documentBody = InboxWhenReady.getDomElement('body');
+
   InboxWhenReady.dom.$inbox = InboxWhenReady.getDomElement(InboxWhenReady.domSelectors.inbox);
 
   if(InboxWhenReady.state.app === 'InboxByGmail') {
@@ -127,7 +177,22 @@ InboxWhenReady.prototype.selectDomElements = function() {
   else if(InboxWhenReady.state.app === 'Gmail') {
     InboxWhenReady.dom.$inboxCount = InboxWhenReady.getDomElement('.Di');
     InboxWhenReady.dom.$inboxContainer = InboxWhenReady.getDomElement('.AO');
-    InboxWhenReady.dom.$actionButtonsContainer = InboxWhenReady.getDomElement('.aqL').childNodes[0].childNodes[0];
+
+    var foundTheVisibleButtonWrapper = false;
+    var visibleContainerMatch = 0;
+
+    while(!foundTheVisibleButtonWrapper) {
+      InboxWhenReady.dom.$actionButtonsWrapper = InboxWhenReady.getDomElement('.G-atb', visibleContainerMatch);
+
+      if(InboxWhenReady.dom.$actionButtonsWrapper.style.display === 'none') {
+        visibleContainerMatch++;
+      }
+      else {
+        foundTheVisibleButtonWrapper = true;
+      }
+    }
+
+    InboxWhenReady.dom.$actionButtonsContainer = InboxWhenReady.getDomElement('.aqL', visibleContainerMatch).childNodes[0].childNodes[0];
 
     // Save the Inbox label with unread count before we do any DOM manipulation
     InboxWhenReady.labels.inboxLink = InboxWhenReady.dom.$inboxLink.innerHTML;
@@ -185,6 +250,21 @@ InboxWhenReady.prototype.toggleInbox = function() {
 };
 
 InboxWhenReady.prototype.updateView = function() {
+  console.log('updating view');
+  InboxWhenReady.setActiveView();
+
+  if(InboxWhenReady.isInboxViewActive() && InboxWhenReady.state.mustReInit === true) {
+    InboxWhenReady.state.actionBarIsLoaded = setInterval(function() {
+      if(document.getElementsByClassName('G-atb').length !== 0) {
+        console.log('Selecting dom elements and adding buttons...');
+        InboxWhenReady.selectDomElements();
+        InboxWhenReady.addButtons();
+        InboxWhenReady.state.mustReInit = false;
+        clearInterval(InboxWhenReady.state.actionBarIsLoaded);
+      }
+    }, 500);
+  }
+
   if(InboxWhenReady.state.app === 'InboxByGmail') {
     InboxWhenReady.updateInboxByGmailView();
   }
@@ -193,10 +273,12 @@ InboxWhenReady.prototype.updateView = function() {
   }
 };
 
+
+
 InboxWhenReady.prototype.updateInboxByGmailView = function() {
 
-  if(window.location.pathname.length === 5) {
-    InboxWhenReady.state.inboxViewIsActive = true;
+  if(InboxWhenReady.isInboxByGmailInboxViewActive()) {
+
     InboxWhenReady.dom.$documentBody.classList.add('iwr-inbox-view-active');
 
     if(InboxWhenReady.state.inboxHidden === true) {
@@ -204,7 +286,6 @@ InboxWhenReady.prototype.updateInboxByGmailView = function() {
     }
   }
   else {
-    InboxWhenReady.state.inboxViewIsActive = false;
     InboxWhenReady.dom.$documentBody.classList.remove('iwr-inbox-view-active');
 
     if(InboxWhenReady.state.inboxHidden === true) {
@@ -213,9 +294,10 @@ InboxWhenReady.prototype.updateInboxByGmailView = function() {
   }
 };
 
+
 InboxWhenReady.prototype.updateGmailView = function() {
-  if (location.hash.indexOf('#inbox') === 0) {
-    InboxWhenReady.state.inboxViewIsActive = true;
+
+  if (InboxWhenReady.isGmailInboxViewActive()) {
     InboxWhenReady.dom.$documentBody.classList.add('iwr-inbox-view-active');
 
     if(InboxWhenReady.state.inboxHidden === true) {
@@ -224,7 +306,6 @@ InboxWhenReady.prototype.updateGmailView = function() {
   }
   else {
     InboxWhenReady.dom.$documentBody.classList.remove('iwr-inbox-view-active');
-    InboxWhenReady.state.inboxViewIsActive = false;
 
     if(InboxWhenReady.state.inboxHidden === true) {
       InboxWhenReady.showEmailView();
@@ -235,17 +316,6 @@ InboxWhenReady.prototype.updateGmailView = function() {
     // If the user navigates to settings page, there's a major DOM update.
     // So, we'll need to initialise again once they return to an inbox view.
     InboxWhenReady.state.mustReInit = true;
-  }
-  else if(InboxWhenReady.state.mustReInit === true) {
-    console.log('setting reInit interval...');
-    InboxWhenReady.state.actionBarIsLoaded = setInterval(function() {
-      if(document.getElementsByClassName('G-atb').length !== 0) {
-        console.log('reiniitting...');
-        InboxWhenReady.init();
-        InboxWhenReady.state.mustReInit = false;
-        clearInterval(InboxWhenReady.state.actionBarIsLoaded);
-      }
-    }, 500);
   }
 };
 
@@ -294,14 +364,6 @@ InboxWhenReady.prototype.addButtons = function() {
     showMyInboxButton.className = 'G-Ni J-J5-Ji';
     showMyInboxButton.innerHTML = '<div class="T-I J-J5-Ji T-I-ax7" role="button" tabindex="0" style="-webkit-user-select: none;"><span class="">Show Inbox</span></div>';
   }
-  console.log('actionButtonsContainer');
-  console.log(this.dom.$actionButtonsContainer);
-  this.dom.$actionButtonsContainer.insertBefore(showMyInboxButton, this.dom.$actionButtonsContainer.childNodes[0]);
-
-  var showMyInbox = this.getDomElement('#show_my_inbox');
-  showMyInbox.addEventListener('click', function() {
-    InboxWhenReady.toggleInbox();
-  });
 
   // Hide My Inbox button
   var hideMyInboxButton = document.createElement('div');
@@ -316,7 +378,13 @@ InboxWhenReady.prototype.addButtons = function() {
     hideMyInboxButton.innerHTML = '<div class="T-I J-J5-Ji T-I-ax7" role="button" tabindex="0" style="-webkit-user-select: none;"><span class="">Hide Inbox</span></div>';
   }
 
+  this.dom.$actionButtonsContainer.insertBefore(showMyInboxButton, this.dom.$actionButtonsContainer.childNodes[0]);
   this.dom.$actionButtonsContainer.insertBefore(hideMyInboxButton, this.dom.$actionButtonsContainer.childNodes[0]);
+
+  var showMyInbox = this.getDomElement('#show_my_inbox');
+  showMyInbox.addEventListener('click', function() {
+    InboxWhenReady.toggleInbox();
+  });
 
   var HideMyInbox = this.getDomElement('#hide_my_inbox');
   HideMyInbox.addEventListener('click', function() {

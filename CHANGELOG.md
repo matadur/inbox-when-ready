@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.3] - 2016-01-10
+### Fixed
+- Show / hide button should be added even if the Gmail app is loaded to a
+view that isn't the inbox.
+
 ## [1.1.2] - 2015-11-04
 ### Changed
 - Pinned items view should not be affected by this plugin (i.e. pinned items should be visible via toggle button even when inbox is hidden).
