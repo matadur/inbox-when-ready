@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [1.1.4] - 2016-01-12
+### Fixed
+- Show / hide function should remain active on inbox compose screen
+
 ## [1.1.3] - 2016-01-10
 ### Fixed
 - Show / hide button should be added even if the Gmail app is loaded to a

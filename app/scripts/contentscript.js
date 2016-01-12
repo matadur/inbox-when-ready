@@ -138,7 +138,6 @@ InboxWhenReady.prototype.setActiveView = function() {
 
 InboxWhenReady.prototype.isInboxViewActive = function() {
   if(InboxWhenReady.isGmailInboxViewActive() || InboxWhenReady.isInboxByGmailInboxViewActive()) {
-    console.log('inbox view is active');
     return true;
   }
   else {
@@ -147,7 +146,7 @@ InboxWhenReady.prototype.isInboxViewActive = function() {
 };
 
 InboxWhenReady.prototype.isGmailInboxViewActive = function() {
-  if(this.state.activeView === '#inbox') {
+  if(this.state.activeView === '#inbox' || this.state.activeView.indexOf('#inbox?compose=') !== -1) {
     return true;
   }
   else {
@@ -250,13 +249,11 @@ InboxWhenReady.prototype.toggleInbox = function() {
 };
 
 InboxWhenReady.prototype.updateView = function() {
-  console.log('updating view');
   InboxWhenReady.setActiveView();
 
   if(InboxWhenReady.isInboxViewActive() && InboxWhenReady.state.mustReInit === true) {
     InboxWhenReady.state.actionBarIsLoaded = setInterval(function() {
       if(document.getElementsByClassName('G-atb').length !== 0) {
-        console.log('Selecting dom elements and adding buttons...');
         InboxWhenReady.selectDomElements();
         InboxWhenReady.addButtons();
         InboxWhenReady.state.mustReInit = false;
