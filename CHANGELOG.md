@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.6] - 2016-04-01
+### Fixed
+- Should not add multiple show/hide buttons if Gmail causes a hashchange while loading.
 
 ## [1.1.4] - 2016-01-12
 ### Fixed

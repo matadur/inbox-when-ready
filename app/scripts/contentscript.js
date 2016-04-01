@@ -6,7 +6,7 @@ function InboxWhenReady() {
   this.state.appIsLoaded = false;
   this.state.activeView = null;
   this.state.inboxHidden = true;
-  this.state.actionBarIsLoaded = false;
+  this.state.actionBarInterval = false;
   this.state.inboxLabelChecker = false;
   this.state.mustReInit = false;
 
@@ -46,7 +46,6 @@ InboxWhenReady.prototype.getDomElement = function(selector,match) {
 };
 
 InboxWhenReady.prototype.init = function() {
-
 
   // Are we using Gmail or InboxByGmail?
   this.setApp();
@@ -252,14 +251,27 @@ InboxWhenReady.prototype.updateView = function() {
   InboxWhenReady.setActiveView();
 
   if(InboxWhenReady.isInboxViewActive() && InboxWhenReady.state.mustReInit === true) {
-    InboxWhenReady.state.actionBarIsLoaded = setInterval(function() {
-      if(document.getElementsByClassName('G-atb').length !== 0) {
-        InboxWhenReady.selectDomElements();
-        InboxWhenReady.addButtons();
-        InboxWhenReady.state.mustReInit = false;
-        clearInterval(InboxWhenReady.state.actionBarIsLoaded);
-      }
-    }, 500);
+
+    // Without this condition, the interval could get set more than
+    // once, because updateView() may get called more than once, e.g.
+    // if a user loads https://mail.google.com/mail/u/0/ and then is
+    // redirected to https://mail.google.com/mail/u/0/#inbox.
+    if(InboxWhenReady.state.actionBarInterval === false) {
+
+      // Check for the presence of the element with class 'G-atb',
+      // then add InboxWhenReady buttons to the DOM.
+      InboxWhenReady.state.actionBarInterval = setInterval(function() {
+
+        if(document.getElementsByClassName('G-atb').length !== 0 && InboxWhenReady.state.mustReInit === true) {
+          InboxWhenReady.selectDomElements();
+          InboxWhenReady.addButtons();
+
+          clearInterval(InboxWhenReady.state.actionBarInterval);
+          InboxWhenReady.state.mustReInit = false;
+          InboxWhenReady.state.actionBarInterval = false;
+        }
+      }, 500);
+    }
   }
 
   if(InboxWhenReady.state.app === 'InboxByGmail') {
