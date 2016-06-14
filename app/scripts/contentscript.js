@@ -54,8 +54,6 @@ InboxWhenReady.prototype.init = function() {
   // depending on whether we're using Gmail or Inbox by Gmail
   this.setDomSelectors();
 
-  this.setActiveView();
-
   this.state.appIsLoaded = setInterval(function() {
 
     InboxWhenReady.dom.$inboxLink = InboxWhenReady.getDomElement(InboxWhenReady.domSelectors.inboxLink, InboxWhenReady.domSelectors.inboxLinkMatch);
@@ -64,6 +62,7 @@ InboxWhenReady.prototype.init = function() {
     if(InboxWhenReady.dom.$inboxLink !== false) {
 
       InboxWhenReady.dom.$documentBody = InboxWhenReady.getDomElement('body');
+      InboxWhenReady.setActiveView();
 
       clearInterval(InboxWhenReady.state.appIsLoaded);
 
@@ -127,12 +126,35 @@ InboxWhenReady.prototype.setDomSelectors = function() {
 };
 
 InboxWhenReady.prototype.setActiveView = function() {
+  this.removeActiveViewClass();
+
   if(this.state.app === 'InboxByGmail') {
     this.state.activeView = window.location.pathname;
   }
   else if(this.state.app === 'Gmail') {
     this.state.activeView = location.hash;
   }
+
+  this.addActiveViewClass();
+};
+
+InboxWhenReady.prototype.removeActiveViewClass = function() {
+  if(this.state.activeView) {
+    var activeViewSlug = this.getActiveViewSlug();
+
+    this.dom.$documentBody.classList.remove('iwr-active-view--' + activeViewSlug);
+  }
+};
+
+InboxWhenReady.prototype.addActiveViewClass = function() {
+  var activeViewSlug = this.getActiveViewSlug();
+  this.dom.$documentBody.classList.add('iwr-active-view--' + activeViewSlug);
+};
+
+InboxWhenReady.prototype.getActiveViewSlug = function() {
+  var activeViewSlug = this.state.activeView.replace('#', '');
+  activeViewSlug = activeViewSlug.replace('?compose=new', '');
+  return activeViewSlug;
 };
 
 InboxWhenReady.prototype.isInboxViewActive = function() {
@@ -161,8 +183,6 @@ InboxWhenReady.prototype.isInboxByGmailInboxViewActive = function() {
     return false;
   }
 };
-
-
 
 
 InboxWhenReady.prototype.selectDomElements = function() {
@@ -231,9 +251,11 @@ InboxWhenReady.prototype.showInbox = function() {
 
 InboxWhenReady.prototype.hideEmailView = function() {
   this.dom.$documentBody.classList.add('iwr-hide-email-view');
+  this.dom.$documentBody.classList.remove('iwr-show-email-view');
 };
 
 InboxWhenReady.prototype.showEmailView = function() {
+  this.dom.$documentBody.classList.add('iwr-show-email-view');
   this.dom.$documentBody.classList.remove('iwr-hide-email-view');
 };
 
@@ -287,16 +309,11 @@ InboxWhenReady.prototype.updateView = function() {
 InboxWhenReady.prototype.updateInboxByGmailView = function() {
 
   if(InboxWhenReady.isInboxByGmailInboxViewActive()) {
-
-    InboxWhenReady.dom.$documentBody.classList.add('iwr-inbox-view-active');
-
     if(InboxWhenReady.state.inboxHidden === true) {
       InboxWhenReady.hideEmailView();
     }
   }
   else {
-    InboxWhenReady.dom.$documentBody.classList.remove('iwr-inbox-view-active');
-
     if(InboxWhenReady.state.inboxHidden === true) {
       InboxWhenReady.showEmailView();
     }
@@ -307,15 +324,11 @@ InboxWhenReady.prototype.updateInboxByGmailView = function() {
 InboxWhenReady.prototype.updateGmailView = function() {
 
   if (InboxWhenReady.isGmailInboxViewActive()) {
-    InboxWhenReady.dom.$documentBody.classList.add('iwr-inbox-view-active');
-
     if(InboxWhenReady.state.inboxHidden === true) {
       InboxWhenReady.hideEmailView();
     }
   }
   else {
-    InboxWhenReady.dom.$documentBody.classList.remove('iwr-inbox-view-active');
-
     if(InboxWhenReady.state.inboxHidden === true) {
       InboxWhenReady.showEmailView();
     }
@@ -341,10 +354,10 @@ InboxWhenReady.prototype.bindListeners = function() {
       pushState.apply(history, arguments); \
       var $body = document.querySelectorAll('body')[0]; \
       if(window.location.pathname.length === 5) { \
-        $body.classList.add('iwr-inbox-view-active');  \
+        $body.classList.add('iwr-active-view--inbox');  \
       } \
       else { \
-        $body.classList.remove('iwr-inbox-view-active'); \
+        $body.classList.remove('iwr-active-view--inbox'); \
       } \
     };";
 

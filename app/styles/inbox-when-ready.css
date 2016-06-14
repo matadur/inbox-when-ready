@@ -2,11 +2,11 @@
  * To start with, we hide *all* elements that might give a clue
  * about inbox status. We must do this before InboxWhenReady loads,
  * otherwise there might be a brief flash of inbox status clues
- * just after the app loads.
+ * just after the app loads, or during view changes.
  */
 
 /* Selectors for Gmail */
-.aeF,
+.aE3,
 .Di,
 .aeN .ajl,
 .aeV
@@ -14,9 +14,8 @@
   visibility: hidden !important; /* important rules override native view logic */
 }
 
-/* We should not hide view components if the user has browse directly to an individual
-email. */
-.xE .aeF,
+/* We should not hide view components if the user has browsed directly to an individual email. */
+.xE .aE3,
 .xE .Di,
 .xE .aeN .ajl,
 .xE .aeV
@@ -34,7 +33,6 @@ email. */
  * has loaded.
  */
 /* Selectors for Gmail */
-.iwr-active .aeF,
 .iwr-active .Di,
 .iwr-active .aeN .ajl,
 .iwr-active .aeV
@@ -47,32 +45,46 @@ email. */
   opacity: 1 !important; /* important rules override native view logic */
 }
 
+
+/*
+ * The .iwr-show-email-view class is appended to body when the user
+ * does want to see their inbox AND they are on the #inbox view.
+ */
+ /* Selectors for Gmail */
+
+.iwr-active-view--inbox.iwr-show-email-view .aE3,
+.iwr-active-view--inbox.iwr-show-email-view .Di,
+.iwr-active-view--inbox.iwr-show-email-view .aeV {
+  visibility: visible !important;
+}
+
+
 /*
  * The .iwr-hide-email-view class is appended to body when the user
  * does not want to see their inbox AND they are on the #inbox view.
  */
  /* Selectors for Gmail */
-.iwr-active.iwr-hide-email-view .aeF,
+.iwr-active.iwr-hide-email-view .aE3,
 .iwr-active.iwr-hide-email-view .Di,
 .iwr-active.iwr-hide-email-view .aeV {
   visibility: hidden !important;
 }
 
 /* Selectors for InboxByGmail */
-.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .tE {
+.iwr-active.iwr-hide-email-view.iwr-active-view--inbox .tE {
   opacity: 0 !important;
 }
 /* Do show pinned messages */
-.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .ay .tE {
+.iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay .tE {
   opacity: 1 !important;
 }
 
-.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .ay #show_my_inbox,
-.iwr-active.iwr-hide-email-view.iwr-inbox-view-active .ay #hide_my_inbox {
+.iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay #show_my_inbox,
+.iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay #hide_my_inbox {
   display: none !important;
 }
 
-.iwr-active.iwr-hide-email-view .aeF {
+.iwr-active.iwr-hide-email-view .aE3 {
   display: none !important;
 }
 
@@ -89,7 +101,7 @@ email. */
   display: inline-block !important;
 }
 
-.iwr-inbox-view-active #hide_my_inbox {
+.iwr-active-view--inbox #hide_my_inbox {
   display: inline-block !important;
 }
 
@@ -98,7 +110,7 @@ email. */
 }
 
 /* Show/hide buttons for InboxByGmail */
-.iwr-inbox-view-active .c4 > #show_my_inbox, .iwr-inbox-view-active .c4 > #hide_my_inbox {
+.iwr-active-view--inbox .c4 > #show_my_inbox, .iwr-active-view--inbox .c4 > #hide_my_inbox {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -109,7 +121,7 @@ email. */
   text-align: center;
 }
 
-.iwr-inbox-view-active .c4 > #hide_my_inbox {
+.iwr-active-view--inbox .c4 > #hide_my_inbox {
   top: 72px;
   position: absolute;
 }
