@@ -1,84 +1,119 @@
+/**
+ * This extension supports Gmail and InboxByGmail. The view logic is
+ * similar for both interfaces, but the selectors are different.
+ *
+ *
+ * Selector reference
+ *
+ * Gmail and Inbox by Gmail user interfaces have very enigmatic CSS
+ * selector names.
+ *
+ * --- Gmail ---
+ *
+ * .aeF         main area wrapper (contains wrappers for inbox,
+ *              search results, etc)
+ * .ar5         the message count and pagination buttons
+ * .aE3         inbox wrapper
+ * .aeN .ajl    left sidebar menu
+ * .aeV         account metadata (shown beneath message list)
+ * .aeG         account metadata
+ *
+ * --- /Gmail ---
+ *
+ * --- InboxbyGmail ---
+ *
+ * @TODO
+ *
+ * --- /InboxbyGmail ---
+ *
+ */
+
+
 /*
- * To start with, we hide *all* elements that might give a clue
+ * To begin, we hide *all* elements that might give a clue
  * about inbox status. We must do this before InboxWhenReady loads,
  * otherwise there might be a brief flash of inbox status clues
  * just after the app loads, or during view changes.
  */
 
-/* Selectors for Gmail */
+/* --- Gmail --- */
 .aE3,
-.Di,
 .aeN .ajl,
-.aeV
+.aeV,
+.ar5,
 .aeG {
-  visibility: hidden !important; /* important rules override native view logic */
+  visibility: hidden !important; /* important rules override native styles */
 }
+/* --- /Gmail --- */
 
-/* We should not hide view components if the user has browsed directly to an individual email. */
-.xE .aE3,
-.xE .Di,
-.xE .aeN .ajl,
-.xE .aeV
-.xE .aeG {
-  visibility: visible !important;
-}
-
-/* Selectors for InboxByGmail */
+/* --- InboxByGmail --- */
 .tE {
-  opacity: 0 !important; /* important rules override native view logic */
+  opacity: 0 !important;
 }
+/* --- /InboxByGmail --- */
+
 
 /*
  * The .iwr-active class is appended to body when InboxWhenReady
  * has loaded.
  */
-/* Selectors for Gmail */
-.iwr-active .Di,
+
+/* --- Gmail --- */
 .iwr-active .aeN .ajl,
-.iwr-active .aeV
-.iwr-active .aeG {
+.iwr-active .ar5,
+.iwr-active .aeV,
+.iwr-active .aeG
+{
   visibility: visible !important;
 }
+/* --- /Gmail --- */
 
-/* Selectors for InboxByGmail */
+/* --- InboxByGmail --- */
 .iwr-active .tE {
   opacity: 1 !important; /* important rules override native view logic */
 }
+/* --- /InboxByGmail --- */
 
 
 /*
- * The .iwr-show-email-view class is appended to body when the user
- * does want to see their inbox AND they are on the #inbox view.
+ * If user does want to see their inbox AND they are on the #inbox view,
+ * then show the inbox wrapper and the storage information.
  */
- /* Selectors for Gmail */
 
+/* --- Gmail --- */
 .iwr-active-view--inbox.iwr-show-email-view .aE3,
-.iwr-active-view--inbox.iwr-show-email-view .Di,
-.iwr-active-view--inbox.iwr-show-email-view .aeV {
+.iwr-active-view--inbox.iwr-show-email-view .aeV,
+.iwr-active-view--inbox.iwr-show-email-view .aeG,
+.iwr-active-view--inbox.iwr-show-email-view .ar5 {
   visibility: visible !important;
 }
+/* --- /Gmail --- */
 
 
 /*
- * The .iwr-hide-email-view class is appended to body when the user
- * does not want to see their inbox AND they are on the #inbox view.
+ * If user does not want to see their inbox AND they are on the #inbox view,
+ * then hide the inbox wrapper and the storage information.
  */
- /* Selectors for Gmail */
-.iwr-active.iwr-hide-email-view .aE3,
-.iwr-active.iwr-hide-email-view .Di,
-.iwr-active.iwr-hide-email-view .aeV {
+
+ /* --- Gmail --- */
+ .iwr-active-view--inbox.iwr-hide-email-view .aE3,
+ .iwr-active-view--inbox.iwr-hide-email-view .aeV,
+ .iwr-active-view--inbox.iwr-hide-email-view .aeG,
+ .iwr-active-view--inbox.iwr-hide-email-view .ar5 {
   visibility: hidden !important;
 }
+/* --- /Gmail --- */
 
-/* Selectors for InboxByGmail */
-.iwr-active.iwr-hide-email-view.iwr-active-view--inbox .tE {
+/* --- InboxByGmail --- */
+.iwr-hide-email-view.iwr-active-view--inbox .tE {
   opacity: 0 !important;
 }
 /* Do show pinned messages */
-.iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay .tE {
+.iwr-hide-email-view.iwr-active-view--inbox .ay .tE {
   opacity: 1 !important;
 }
 
+/* ?? @TODO */
 .iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay #show_my_inbox,
 .iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay #hide_my_inbox {
   display: none !important;
@@ -87,10 +122,12 @@
 .iwr-active.iwr-hide-email-view .aE3 {
   display: none !important;
 }
+/* --- /InboxByGmail --- */
+
 
 /**
- * Control visibility of the show / hide inbox buttons added
- * to the DOM by this extension.
+ * Control visibility of the show / hide inbox buttons added by this
+ * extension.
  */
 #show_my_inbox,
 #hide_my_inbox {
@@ -109,8 +146,9 @@
   display: none !important;
 }
 
-/* Show/hide buttons for InboxByGmail */
-.iwr-active-view--inbox .c4 > #show_my_inbox, .iwr-active-view--inbox .c4 > #hide_my_inbox {
+/* --- InboxByGmail --- */
+.iwr-active-view--inbox .c4 > #show_my_inbox,
+.iwr-active-view--inbox .c4 > #hide_my_inbox {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -125,3 +163,33 @@
   top: 72px;
   position: absolute;
 }
+/* --- /InboxByGmail --- */
+
+
+/*
+ * If the user has browsed directly to
+ * an individual email in Gmail. For example, via a link like:
+ *
+ * https://mail.google.com/mail/u/0/?ui=2&view=btop&ver=1nnj51jn5rorm&search=inbox&th=15110e66fb6fd617&cvid=1
+ */
+
+/* --- Gmail --- */
+.xE .aE3,
+.xE .aeN .ajl,
+.xE .aeV,
+.xE .aeG {
+  visibility: visible !important;
+}
+/* --- /Gmail --- */
+
+
+/*
+ * In Gmail, the main area wrapper has a min-height. This doesn't make
+ * sense when inbox is hidden.
+ */
+
+/* --- Gmail --- */
+.aeF {
+  min-height: 0 !important;
+}
+/* --- /Gmail --- */
