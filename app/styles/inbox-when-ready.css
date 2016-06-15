@@ -22,7 +22,9 @@
  *
  * --- InboxbyGmail ---
  *
- * @TODO
+ *
+ * .tE          main area wrapper
+ * .ay          modifier applied to main area wrapper when on pinned view
  *
  * --- /InboxbyGmail ---
  *
@@ -48,7 +50,7 @@
 
 /* --- InboxByGmail --- */
 .tE {
-  opacity: 0 !important;
+  visibility: hidden !important;
 }
 /* --- /InboxByGmail --- */
 
@@ -70,7 +72,7 @@
 
 /* --- InboxByGmail --- */
 .iwr-active .tE {
-  opacity: 1 !important; /* important rules override native view logic */
+  visibility: visible !important; /* important rules override native view logic */
 }
 /* --- /InboxByGmail --- */
 
@@ -106,16 +108,15 @@
 
 /* --- InboxByGmail --- */
 .iwr-hide-email-view.iwr-active-view--inbox .tE {
-  opacity: 0 !important;
+  visibility: hidden !important;
 }
 /* Do show pinned messages */
 .iwr-hide-email-view.iwr-active-view--inbox .ay .tE {
-  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-/* ?? @TODO */
 .iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay #show_my_inbox,
-.iwr-active.iwr-hide-email-view.iwr-active-view--inbox .ay #hide_my_inbox {
+.iwr-active.iwr-show-email-view.iwr-active-view--inbox .ay #hide_my_inbox {
   display: none !important;
 }
 
