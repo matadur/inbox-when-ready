@@ -2,8 +2,20 @@
 
 /* --- Google Analytics --- */
 
+/* Set Google Analytics account ID according to environment */
+var gaAccountId;
+
+if(isDevelopmentEnvironment()) {
+  // Development environment
+  gaAccountId = 'UA-25161739-6';
+}
+else {
+  // Production environment
+  gaAccountId = 'UA-25161739-7';
+}
+
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-25161739-6']);
+_gaq.push(['_setAccount', gaAccountId]);
 
 (function() {
   var ga = document.createElement('script');
@@ -15,8 +27,12 @@ _gaq.push(['_setAccount', 'UA-25161739-6']);
 })();
 
 chrome.runtime.onMessage.addListener(function( event, sender, sendResponse ) {
-  event.label = event.label.toString();
-  _gaq.push(['_trackEvent', event.category, event.action, event.label]);
+  _gaq.push(['_trackEvent', event.category, event.action, event.label, event.value]);
   sendResponse(event);
 });
 /* --- /Google Analytics --- */
+
+// via http://stackoverflow.com/a/20227975
+function isDevelopmentEnvironment() {
+    return !('update_url' in chrome.runtime.getManifest());
+}
