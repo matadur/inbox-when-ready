@@ -10,6 +10,9 @@ function InboxWhenReady() {
   this.state.inboxLabelChecker = false;
   this.state.mustReInit = false;
 
+  this.meta = {};
+  this.meta.extensionVersion = null;
+
   this.storage = {};
 
   this.dom = {};
@@ -50,6 +53,9 @@ InboxWhenReady.prototype.getDomElement = function(selector,match) {
 };
 
 InboxWhenReady.prototype.init = function() {
+
+  // What version of the extension are we running?
+  this.getExtensionVersion();
 
   // Are we using Gmail or InboxByGmail?
   this.setApp();
@@ -108,6 +114,11 @@ InboxWhenReady.prototype.init = function() {
       InboxWhenReady.dom.$documentBody.classList.add('iwr-active');
     }
   }, 50);
+};
+
+InboxWhenReady.prototype.getExtensionVersion = function() {
+  var manifest = chrome.runtime.getManifest();
+  this.meta.extensionVersion = manifest.version;
 };
 
 InboxWhenReady.prototype.setApp = function() {
@@ -238,7 +249,8 @@ InboxWhenReady.prototype.hideInbox = function() {
   // Send tracking event
   var event = {
     'category' : this.state.app,
-    'action' : 'Hide inbox'
+    'action' : 'Hide inbox',
+    'label' : this.meta.extensionVersion
   };
 
   this.sendEvent(event);
@@ -272,7 +284,8 @@ InboxWhenReady.prototype.showInbox = function() {
   // Send tracking event
   var event = {
     'category' : this.state.app,
-    'action' : 'Show inbox'
+    'action' : 'Show inbox',
+    'label' : this.meta.extensionVersion
   };
 
   this.sendEvent(event);
@@ -494,7 +507,8 @@ InboxWhenReady.prototype.updateExtensionLoadedCount = function() {
 InboxWhenReady.prototype.sendExtensionFirstLoadEvent = function() {
   var event = {
     'category' : this.state.app,
-    'action' : 'Extension loaded for the first time'
+    'action' : 'Extension loaded for the first time',
+    'label' : this.meta.extensionVersion
   };
 
   InboxWhenReady.sendEvent(event);
@@ -504,7 +518,8 @@ InboxWhenReady.prototype.sendExtensionLoadedEvent = function() {
   var event = {
     'category' : this.state.app,
     'action' : 'Extension loaded',
-    'label' : this.storage.extensionLoadedCount
+    'label' : this.meta.extensionVersion,
+    'value' : this.storage.extensionLoadedCount
   };
 
   InboxWhenReady.sendEvent(event);
