@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.8] - 2016-06-15
+#Added
+- Google Analytics event tracking.
+- Extension now saves load count and first load timestamp to chrome.storage.
+
 ## [1.1.7] - 2016-06-15
 #Added
 - Validation tests.
@@ -21,7 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.1.4] - 2016-01-12
 ### Fixed
-- Show / hide function should remain active on inbox compose screen
+- Show / hide function should remain active on inbox compose screen.
 
 ## [1.1.3] - 2016-01-10
 ### Fixed
