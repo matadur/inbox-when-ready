@@ -182,9 +182,6 @@ InboxWhenReady.prototype.getActiveViewSlug = function() {
     activeViewSlug = 'inbox';
   }
 
-  console.log('activeviewslug');
-  console.log(activeViewSlug);
-
   return activeViewSlug;
 };
 
