@@ -1,0 +1,4 @@
+# You need to start Selenium server before running these tests.
+# ./node_modules/.bin/selenium-standalone start
+
+./node_modules/.bin/wdio wdio.conf.js

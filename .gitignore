@@ -4,8 +4,10 @@ temp
 dist
 .sass-cache
 app/bower_components
-test/bower_components
+tests/bower_components
+tests/config.js
 package
+tests/errorShots
 
 # OS X temp files
 .DS_Store

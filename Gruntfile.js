@@ -82,7 +82,7 @@ module.exports = function (grunt) {
         options: {
           open: false,
           base: [
-            'test',
+            'tests',
             '<%= config.app %>'
           ]
         }
@@ -114,7 +114,7 @@ module.exports = function (grunt) {
         'Gruntfile.js',
         '<%= config.app %>/scripts/{,*/}*.js',
         '!<%= config.app %>/scripts/vendor/*',
-        'test/spec/{,*/}*.js'
+        'tests/spec/{,*/}*.js'
       ]
     },
     mocha: {
