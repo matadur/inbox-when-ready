@@ -171,12 +171,19 @@ InboxWhenReady.prototype.addActiveViewClass = function() {
 
 InboxWhenReady.prototype.getActiveViewSlug = function() {
   var activeViewSlug = this.state.activeView.replace('#', '');
-  activeViewSlug = activeViewSlug.replace('?compose=new', '');
+
+  if(activeViewSlug.indexOf('?') !== -1) {
+    activeViewSlug = activeViewSlug.substring(0, activeViewSlug.indexOf('?'));
+  }
+
   activeViewSlug = activeViewSlug.replace('/', '');
 
   if(activeViewSlug === '') {
     activeViewSlug = 'inbox';
   }
+
+  console.log('activeviewslug');
+  console.log(activeViewSlug);
 
   return activeViewSlug;
 };
