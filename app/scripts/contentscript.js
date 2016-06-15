@@ -10,6 +10,8 @@ function InboxWhenReady() {
   this.state.inboxLabelChecker = false;
   this.state.mustReInit = false;
 
+  this.storage = {};
+
   this.dom = {};
   this.dom.$documentBody = null;
   this.dom.$inboxLink = null;
@@ -99,6 +101,9 @@ InboxWhenReady.prototype.init = function() {
       // Listen for changes in app state.
       InboxWhenReady.bindListeners();
 
+      // Update extension loaded count
+      InboxWhenReady.updateExtensionLoadedCount();
+
       // This class indicates that Inbox When Ready has loaded.
       InboxWhenReady.dom.$documentBody.classList.add('iwr-active');
     }
@@ -144,7 +149,6 @@ InboxWhenReady.prototype.setActiveView = function() {
 InboxWhenReady.prototype.removeActiveViewClass = function() {
   if(this.state.activeView) {
     var activeViewSlug = this.getActiveViewSlug();
-    console.log('Removing active view class ' + activeViewSlug);
     this.dom.$documentBody.classList.remove('iwr-active-view--' + activeViewSlug);
   }
 };
@@ -152,9 +156,6 @@ InboxWhenReady.prototype.removeActiveViewClass = function() {
 InboxWhenReady.prototype.addActiveViewClass = function() {
   var activeViewSlug = this.getActiveViewSlug();
   this.dom.$documentBody.classList.add('iwr-active-view--' + activeViewSlug);
-
-  console.log('Adding active view class ' + activeViewSlug);
-  console.log(this.dom.$documentBody.classList);
 };
 
 InboxWhenReady.prototype.getActiveViewSlug = function() {
@@ -171,11 +172,9 @@ InboxWhenReady.prototype.getActiveViewSlug = function() {
 
 InboxWhenReady.prototype.isInboxViewActive = function() {
   if(InboxWhenReady.isGmailInboxViewActive() || InboxWhenReady.isInboxByGmailInboxViewActive()) {
-    console.log('Inbox view is active');
     return true;
   }
   else {
-    console.log('Inbox view is inactive');
     return false;
   }
 };
@@ -236,6 +235,14 @@ InboxWhenReady.prototype.hideInbox = function() {
 
   this.state.inboxHidden = true;
 
+  // Send tracking event
+  var event = {
+    'category' : this.state.app,
+    'action' : 'Hide inbox'
+  };
+
+  this.sendEvent(event);
+
   if(this.state.app === 'Gmail') {
     this.dom.$inboxLink.innerHTML = 'Inbox';
 
@@ -261,6 +268,14 @@ InboxWhenReady.prototype.showInbox = function() {
   }
 
   this.state.inboxHidden = false;
+
+  // Send tracking event
+  var event = {
+    'category' : this.state.app,
+    'action' : 'Show inbox'
+  };
+
+  this.sendEvent(event);
 };
 
 InboxWhenReady.prototype.hideEmailView = function() {
@@ -440,6 +455,77 @@ InboxWhenReady.prototype.addButtons = function() {
   inboxLinkClone.id = 'inbox_link_without_unread_count';
   inboxLinkContainer.insertBefore(inboxLinkClone, inboxLinkParent.nextSibling);
   */
+};
+
+InboxWhenReady.prototype.updateExtensionLoadedCount = function() {
+  var extensionLoadedCount = null;
+
+  chrome.storage.sync.get('extensionLoadedCount', function(items) {
+    if (!chrome.runtime.error) {
+      // We loaded from storage succesfully.
+
+      if(items.hasOwnProperty('extensionLoadedCount')) {
+        // Increment the loaded count
+        extensionLoadedCount = items.extensionLoadedCount + 1;
+      }
+      else {
+        // Loading extension for the first time
+        extensionLoadedCount = 1;
+
+        // Record first load timestamp
+        InboxWhenReady.saveUserData('extensionFirstLoadTimestamp', Date.now());
+
+        // Fire "extension first loaded" analytics event.
+        InboxWhenReady.sendExtensionFirstLoadEvent();
+      }
+
+      // Save updated count to storage.
+      InboxWhenReady.saveUserData('extensionLoadedCount', extensionLoadedCount);
+
+      // Fire "extension loaded" analytics event.
+      InboxWhenReady.sendExtensionLoadedEvent();
+    }
+    else {
+      console.error('Could not get extensionLoadedCount from storage.');
+    }
+  });
+};
+
+InboxWhenReady.prototype.sendExtensionFirstLoadEvent = function() {
+  var event = {
+    'category' : this.state.app,
+    'action' : 'Extension loaded for the first time'
+  };
+
+  InboxWhenReady.sendEvent(event);
+};
+
+InboxWhenReady.prototype.sendExtensionLoadedEvent = function() {
+  var event = {
+    'category' : this.state.app,
+    'action' : 'Extension loaded',
+    'label' : this.storage.extensionLoadedCount
+  };
+
+  InboxWhenReady.sendEvent(event);
+};
+
+InboxWhenReady.prototype.sendEvent = function(event) {
+  // Send to Google Analytics
+  chrome.runtime.sendMessage(event, function() {
+    // Do nothing.
+  });
+};
+
+InboxWhenReady.prototype.saveUserData = function(key, value) {
+  var userData = {};
+  userData[key] = value;
+  chrome.storage.sync.set( userData, function() {
+    // Do nothing.
+  });
+
+  // Also save locally, so it's immediately available
+  this.storage[key] = value;
 };
 
 var InboxWhenReady = new InboxWhenReady();
