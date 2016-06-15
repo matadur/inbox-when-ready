@@ -37,10 +37,12 @@ InboxWhenReady.prototype.getDomElement = function(selector,match) {
       return document.querySelectorAll(selector)[match];
     }
     else {
+      console.warn('InboxWhenReady: Selector "' + selector + '" matched one or more DOM elements, but less than the expected ' + (match + 1) + ' elements.');
       return false;
     }
   }
   else {
+    console.warn('InboxWhenReady: Selector "' + selector + '" did not match any DOM elements.');
     return false;
   }
 };
@@ -62,6 +64,7 @@ InboxWhenReady.prototype.init = function() {
     if(InboxWhenReady.dom.$inboxLink !== false) {
 
       InboxWhenReady.dom.$documentBody = InboxWhenReady.getDomElement('body');
+
       InboxWhenReady.setActiveView();
 
       clearInterval(InboxWhenReady.state.appIsLoaded);
@@ -141,7 +144,7 @@ InboxWhenReady.prototype.setActiveView = function() {
 InboxWhenReady.prototype.removeActiveViewClass = function() {
   if(this.state.activeView) {
     var activeViewSlug = this.getActiveViewSlug();
-
+    console.log('Removing active view class ' + activeViewSlug);
     this.dom.$documentBody.classList.remove('iwr-active-view--' + activeViewSlug);
   }
 };
@@ -149,19 +152,30 @@ InboxWhenReady.prototype.removeActiveViewClass = function() {
 InboxWhenReady.prototype.addActiveViewClass = function() {
   var activeViewSlug = this.getActiveViewSlug();
   this.dom.$documentBody.classList.add('iwr-active-view--' + activeViewSlug);
+
+  console.log('Adding active view class ' + activeViewSlug);
+  console.log(this.dom.$documentBody.classList);
 };
 
 InboxWhenReady.prototype.getActiveViewSlug = function() {
   var activeViewSlug = this.state.activeView.replace('#', '');
   activeViewSlug = activeViewSlug.replace('?compose=new', '');
+  activeViewSlug = activeViewSlug.replace('/', '');
+
+  if(activeViewSlug === '') {
+    activeViewSlug = 'inbox';
+  }
+
   return activeViewSlug;
 };
 
 InboxWhenReady.prototype.isInboxViewActive = function() {
   if(InboxWhenReady.isGmailInboxViewActive() || InboxWhenReady.isInboxByGmailInboxViewActive()) {
+    console.log('Inbox view is active');
     return true;
   }
   else {
+    console.log('Inbox view is inactive');
     return false;
   }
 };
@@ -176,7 +190,7 @@ InboxWhenReady.prototype.isGmailInboxViewActive = function() {
 };
 
 InboxWhenReady.prototype.isInboxByGmailInboxViewActive = function() {
-  if(window.location.pathname.length === 5) {
+  if(window.location.pathname.length === 1) {
     return true;
   }
   else {
@@ -353,7 +367,7 @@ InboxWhenReady.prototype.bindListeners = function() {
     history.pushState = function () { \
       pushState.apply(history, arguments); \
       var $body = document.querySelectorAll('body')[0]; \
-      if(window.location.pathname.length === 5) { \
+      if(window.location.pathname.length === 1) { \
         $body.classList.add('iwr-active-view--inbox');  \
       } \
       else { \
