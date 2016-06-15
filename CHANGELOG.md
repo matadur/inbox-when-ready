@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.7] - 2016-06-15
+#Added
+- Validation tests.
+- Install helper script (for LDE and a future CI setup).
+
+### Changed
+- Refactored JS and CSS.
+
+### Fixed
+- Inbox should not be briefly visible when view changes back to inbox.
+- Show / hide function should work on Inbox by Gmail.
+
 ## [1.1.6] - 2016-04-01
 ### Fixed
 - Should not add multiple show/hide buttons if Gmail causes a hashchange while loading.
