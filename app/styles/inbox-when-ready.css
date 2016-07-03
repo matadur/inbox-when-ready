@@ -15,8 +15,8 @@
  * .ar5         the message count and pagination buttons
  * .aE3         inbox wrapper
  * .aeN .ajl    left sidebar menu
- * .aeV         account metadata (shown beneath message list)
- * .aeG         account metadata
+ * .aeV .md > div:nth-child(1)      account storage space used (shown
+ *                                  beneath message list)
  *
  * --- /Gmail ---
  *
@@ -41,9 +41,7 @@
 /* --- Gmail --- */
 .aE3,
 .aeN .ajl,
-.aeV,
-.ar5,
-.aeG {
+.ar5 {
   visibility: hidden !important; /* important rules override native styles */
 }
 /* --- /Gmail --- */
@@ -99,8 +97,6 @@
 
  /* --- Gmail --- */
  .iwr-active-view--inbox.iwr-hide-email-view .aE3,
- .iwr-active-view--inbox.iwr-hide-email-view .aeV,
- .iwr-active-view--inbox.iwr-hide-email-view .aeG,
  .iwr-active-view--inbox.iwr-hide-email-view .ar5 {
   visibility: hidden !important;
 }
