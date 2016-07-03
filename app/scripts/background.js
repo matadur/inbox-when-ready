@@ -1,5 +1,10 @@
 'use strict';
 
+// via http://stackoverflow.com/a/20227975
+function isDevelopmentEnvironment() {
+  return !('update_url' in chrome.runtime.getManifest());
+}
+
 /* --- Google Analytics --- */
 
 /* Set Google Analytics account ID according to environment */
@@ -31,8 +36,3 @@ chrome.runtime.onMessage.addListener(function( event, sender, sendResponse ) {
   sendResponse(event);
 });
 /* --- /Google Analytics --- */
-
-// via http://stackoverflow.com/a/20227975
-function isDevelopmentEnvironment() {
-    return !('update_url' in chrome.runtime.getManifest());
-}
