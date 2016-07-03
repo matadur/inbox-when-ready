@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.10] - 2016-07-03
+### Changed
+- Account metadata (displayed beneath inbox) now remains visible when inbox is hidden
+
+### Fixed
+- Toggling inbox display should not cause UI buttons to jiggle left / right.
+
 ## [1.1.9] - 2016-06-15
 ### Fixed
 - Inbox should remain visible on compose screen if user wants to see it.
