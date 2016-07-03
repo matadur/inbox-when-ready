@@ -190,3 +190,15 @@
   min-height: 0 !important;
 }
 /* --- /Gmail --- */
+
+/*
+ * In Gmail, lets force the show / hide buttons to the same width, to avoid a
+ * jiggle in the other UI buttons on toggle.
+ */
+
+ /* --- Gmail --- */
+#show_my_inbox .T-I-ax7,
+#hide_my_inbox .T-I-ax7 {
+  min-width: 62px !important;
+}
+/* --- /Gmail --- */
