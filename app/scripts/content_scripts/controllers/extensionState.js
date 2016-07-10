@@ -290,7 +290,9 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
     var appName = AppState.get('meta', 'name');
 
     if(appName === 'InboxByGmail') {
-      // We have to inject the script into the DOM, otherwise we can't
+      var port = chrome.runtime.connect();
+
+      // We have to inject a message relay into the DOM, otherwise we can't
       // detect the pushstate change, due to Chrome Extension isolated
       // world policy.
       // C.f. https://developer.chrome.com/extensions/content_scripts#execution-environment
@@ -299,21 +301,28 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
       var html = "var pushState = history.pushState; \
       history.pushState = function () { \
         pushState.apply(history, arguments); \
-        var $body = document.querySelectorAll('body')[0]; \
-        if(window.location.pathname.length === 1) { \
-          $body.classList.add('iwr-active-view--inbox');  \
-        } \
-        else { \
-          $body.classList.remove('iwr-active-view--inbox'); \
-        } \
+        window.postMessage({ type: 'INBOX_BY_GMAIL', text: 'View change' }, '*'); \
       };";
 
-      var domHead = InboxWhenReady.getDomElement('head');
+      var domHead = InboxWhenReady.Utils.getDomElement('head');
       var scriptToInject = document.createElement('script');
       scriptToInject.type = 'text/javascript';
       scriptToInject.innerHTML = html;
       domHead.appendChild(scriptToInject);
       /* jshint ignore:end */
+
+      // Following code snippet adapted from
+      // https://developer.chrome.com/extensions/content_scripts#host-page-communication
+      window.addEventListener('message', function(event) {
+        // We only accept messages from ourselves
+        if (event.source != window)
+          return;
+
+        if (event.data.type && (event.data.type == 'INBOX_BY_GMAIL')) {
+          console.log(event.data.text);
+          InboxWhenReady.Controllers.ExtensionState.updateView();
+        }
+      }, false);
     }
     else if(appName === 'Gmail') {
       window.onhashchange = InboxWhenReady.Controllers.ExtensionState.updateView;

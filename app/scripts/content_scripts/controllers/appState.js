@@ -78,11 +78,14 @@ InboxWhenReady.Controllers.AppState = (function () {
     removeActiveViewClass();
 
     if(appName === 'InboxByGmail') {
-      activeView = window.location.pathname;
+      activeView = getPathname();
     }
     else if(appName === 'Gmail') {
       activeView = location.hash;
     }
+
+    console.log('activeview');
+    console.log(activeView);
 
     AppState.set(null, 'activeView', activeView);
 
@@ -98,6 +101,28 @@ InboxWhenReady.Controllers.AppState = (function () {
       activeViewSlug = getActiveViewSlug();
       $documentBody.classList.remove('iwr-active-view--' + activeViewSlug);
     }
+  }
+
+  // If user has multiple Google accounts and has the account switcher
+  // enabled, then all the Gmail / Inbox by Google pathnames will be
+  // prefxied by something of the form:
+  //
+  //   /u/0/
+  //   /u/1/
+  //   etc...
+  //
+  // This functions strips off these prefixes.
+  function getPathnameWithoutAccountSwitcherPrefix(pathname) {
+    var pathnameWithoutAccountSwitcherPrefix;
+    var regex = /\/u\/\d+/g;
+    pathnameWithoutAccountSwitcherPrefix = pathname.replace(regex, '');
+    return pathnameWithoutAccountSwitcherPrefix;
+  }
+
+  function getPathname() {
+    var pathname = window.location.pathname;
+    pathname = getPathnameWithoutAccountSwitcherPrefix(pathname);
+    return pathname;
   }
 
   function addActiveViewClass() {

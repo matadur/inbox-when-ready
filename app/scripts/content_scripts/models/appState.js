@@ -39,7 +39,8 @@ InboxWhenReady.Models.AppState = (function () {
   }
 
   function isInboxByGmailInboxViewActive() {
-    var isInboxByGmailInboxViewActive = window.location.pathname.length === 1
+    var activeView = publicGet(null, 'activeView');
+    var isInboxByGmailInboxViewActive = activeView === '/';
     return isInboxByGmailInboxViewActive;
   }
 
