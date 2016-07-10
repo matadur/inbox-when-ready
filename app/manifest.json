@@ -16,6 +16,10 @@
     ]
   },
   "options_page": "options.html",
+  "web_accessible_resources": [
+       "scripts/content_scripts/*",
+       "scripts/content_scripts/*/*"
+  ],
   "content_scripts": [
     {
       "matches": [
@@ -26,7 +30,17 @@
         "styles/inbox-when-ready.css"
       ],
       "js": [
-        "scripts/contentscript.js"
+        "scripts/content_scripts/lib/zepto.js",
+        "scripts/content_scripts/models/appState.js",
+        "scripts/content_scripts/models/extensionState.js",
+        "scripts/content_scripts/models/flashMessage.js",
+        "scripts/content_scripts/models/storage.js",
+        "scripts/content_scripts/controllers/appState.js",
+        "scripts/content_scripts/controllers/extensionState.js",
+        "scripts/content_scripts/controllers/flashMessage.js",
+        "scripts/content_scripts/analytics.js",
+        "scripts/content_scripts/utils.js",
+        "scripts/content_scripts/app.js"
       ],
       "run_at": "document_start",
       "all_frames": false

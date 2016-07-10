@@ -6,6 +6,7 @@ describe('Gmail', function() {
 
   var selectors = {};
   selectors.inbox = '.aE3';
+  selectors.firstMessageInInbox = '.aDP .ae4 table tr:first-child [role="link"]';
   selectors.singleMessageWrapper = '.aHU';
 
   selectors.buttonShowMyInbox = '#show_my_inbox';
@@ -20,16 +21,19 @@ describe('Gmail', function() {
 
 
   before(function() {
+    this.timeout(20000);
     browser.url(config.gmail.url);
     browser.setValue('#Email', config.google.username);
     browser.click('#next');
     browser.waitForExist('#Passwd', 5000);
+    browser.pause(500);
     browser.setValue('#Passwd', config.google.password);
     browser.waitForExist('#signIn', 5000);
     browser.click('#signIn');
   });
 
   beforeEach(function() {
+    this.timeout(20000);
     // Go to inbox view
     browser.url(config.gmail.url + '#inbox');
 
@@ -90,6 +94,33 @@ describe('Gmail', function() {
     assert.equal(mainIsVisible, true);
   });
 
+  it('Should show sent messages if app is loaded on sent messages view', function () {
+    this.timeout(20000); // We're gonna reload the app, so test might take longer than 10 secs.
+    browser.url(config.gmail.url + 'mail/u/0/#sent');
+    browser.pause(300);
+    browser.refresh();
+    browser.waitForExist(selectors.mainArea, 10000);
+    var mainIsVisible = browser.isVisible(selectors.mainArea);
+    assert.equal(mainIsVisible, true);
+  });
+
+  it('Should make the inbox hidden and the "show" button visible if app is loaded on sent messages view, then navigated back to inbox view.', function () {
+    this.timeout(20000); // We're gonna reload the app, so test might take longer than 10 secs.
+    browser.url(config.gmail.url + 'mail/u/0/#sent');
+    browser.pause(300);
+    browser.refresh();
+    browser.waitForExist(selectors.mainArea, 10000);
+    browser.click(selectors.buttonBackToInbox);
+    browser.waitForExist(selectors.inbox, 10000);
+    browser.pause(1000);
+
+    var showButtonIsVisible = browser.isVisible(selectors.buttonShowMyInbox);
+    var inboxIsVisible = browser.isVisible(selectors.inbox);
+
+    assert.equal(showButtonIsVisible, true);
+    assert.equal(inboxIsVisible, false);
+  });
+
   it('Should show compose dialog even if inbox is hidden', function () {
     browser.click(selectors.buttonCompose);
     browser.pause(200);
@@ -115,10 +146,33 @@ describe('Gmail', function() {
     assert.equal(inboxIsVisible, true);
   });
 
-  xit('Single message should be visible in btop view', function () {
+  it.skip('Single message should be visible in btop view', function () {
     // @TODO;
-    browser.url(config.gmail.url + 'mail/u/0/?ui=2&view=btop&ver=1nnj51jn5rorm&search=inbox&th=15110e66fb6fd617&cvid=1');
-    browser.waitForExist(selectors.mainArea, 5000);
+    /*
+    browser.click(selectors.buttonShowMyInbox);
+    browser.pause(200);
+    browser.keys('Command');
+    browser.click(selectors.firstMessageInInbox); // Command + Click opens in new tab
+    browser.pause(200);
+
+    var tabIds = browser.getTabIds();
+    var currentTabId = browser.getCurrentTabId();
+
+    browser.pause(4000);
+
+    console.log('current tab id');
+    console.log(currentTabId);
+    console.log('switching to tab');
+    console.log(tabIds[1]);
+
+    browser.switchTab(tabIds[1]);
+    browser.pause(4000);
+    */
+    this.timeout(30000);
+    browser.pause(200);
+    browser.newWindow(config.gmail.url + 'mail/u/0/?ui=2&view=btop&ver=1nnj51jn5rorm&search=inbox&th=155b0700f976403b&cvid=1');
+    browser.pause(200);
+    browser.waitForExist(selectors.mainArea, 30000);
 
     var mainIsVisible = browser.isVisible(selectors.mainArea);
     assert.equal(mainIsVisible, true);

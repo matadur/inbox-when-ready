@@ -1,4 +1,7 @@
 # You need to start Selenium server before running these tests.
 # ./node_modules/.bin/selenium-standalone start
 
+echo 'Remember... you need to start Selenium server before running these tests. To do that, run:'
+echo './node_modules/.bin/selenium-standalone start'
+
 ./node_modules/.bin/wdio wdio.conf.js

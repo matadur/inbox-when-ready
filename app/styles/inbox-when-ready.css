@@ -202,3 +202,23 @@
   min-width: 62px !important;
 }
 /* --- /Gmail --- */
+
+
+.iwr-flash-message {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  background: #f1f1f1;
+}
+
+.iwr-flash-message h2 {
+  margin-top: 3px;
+}
+
+.iwr-flash-message p:last-child {
+  margin-bottom: 0;
+}
+
+.iwr-flash-message [role="button"] {
+  text-decoration: none;
+}
