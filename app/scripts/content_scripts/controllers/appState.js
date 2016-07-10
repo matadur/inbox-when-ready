@@ -41,7 +41,6 @@ InboxWhenReady.Controllers.AppState = (function () {
       AppState.set('domSelectors', 'actionButtonsContainer', { selector : '.c4'});
     }
     else if(AppState.get('meta', 'name') === 'Gmail') {
-      AppState.set('domSelectors', 'inbox', { selector : '.aE3' });
       AppState.set('domSelectors', 'inboxWrapper', { selector : '.aeF' });
       AppState.set('domSelectors', 'inboxLink', { selector : 'a[href$="#inbox"]', match : 1 });
       AppState.set('domSelectors', 'actionButtonsContainer', { selector : '.aqL' });

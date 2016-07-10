@@ -229,6 +229,7 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
 
   function publicUpdateView() {
     AppStateController.updateActiveView();
+
     var appName = AppState.get('meta', 'name');
     var isInboxHidden = ExtensionState.get(null, 'isInboxHidden');
     var isInboxViewActive = AppState.isInboxViewActive();
