@@ -29,6 +29,7 @@ InboxWhenReady.Models.AppState = (function () {
 
   state.labels = {};
   state.labels.inboxLink = null;
+  state.labels.inboxViewPageTitle = null;
 
 
   function isGmailInboxViewActive() {

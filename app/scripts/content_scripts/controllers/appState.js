@@ -209,8 +209,8 @@ InboxWhenReady.Controllers.AppState = (function () {
   var publicMethods = {
     init: publicInit,
     getBodyElement: publicGetBodyElement,
-    updateActiveView: publicUpdateActiveView,
-    selectDomElements: publicSelectDomElements
+    selectDomElements: publicSelectDomElements,
+    updateActiveView: publicUpdateActiveView
   };
   return publicMethods;
 }());

@@ -146,8 +146,61 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
 
     if(appName === 'Gmail') {
       hideInboxUnreadCount();
+      removeUnreadCountFromPageTitle();
     }
   }
+
+  function removeUnreadCountFromPageTitle() {
+    var title = document.title;
+
+    if(title === 'Gmail') {
+      // App is still loading
+      var timer = window.setInterval(function() {
+        var title = document.title;
+        if(title !== 'Gmail') {
+          removeUnreadCountFromPageTitle();
+          clearInterval(timer);
+        }
+      }, 50);
+
+      return;
+    }
+
+    if(inboxPageTitleContainsUnreadCount()) {
+      var titleWithoutUnreadCount = getInboxPageTitleWithoutUnreadCount();
+      document.title = titleWithoutUnreadCount;
+
+      // Save the original title to be restored later
+      AppState.set('labels', 'inboxViewPageTitle', title);
+    }
+  }
+
+  function addUnreadCountBackToPageTitle() {
+    var originalTitle;
+
+    if(!inboxPageTitleContainsUnreadCount()) {
+      originalTitle = AppState.get('labels', 'inboxViewPageTitle');
+      document.title = originalTitle;
+    }
+  }
+
+  function inboxPageTitleContainsUnreadCount() {
+    var inboxPageTitle = document.title;
+    var unreadCountRegex = / [(]\d+[)]/;
+    var isUnreadCountPresent = inboxPageTitle.search(unreadCountRegex) !== -1;
+
+    return isUnreadCountPresent;
+  }
+
+  function getInboxPageTitleWithoutUnreadCount() {
+    var title = document.title;
+    var titleWithoutUnreadCount;
+    var unreadCountRegex = / [(]\d+[)]/;
+
+    titleWithoutUnreadCount = title.replace(unreadCountRegex, '');
+    return titleWithoutUnreadCount;
+  }
+
 
   function hideInboxUnreadCount() {
     var inboxLabelChecker = false;
@@ -158,8 +211,12 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
     inboxLabelChecker = setInterval(function() {
       var isInboxHidden = InboxWhenReady.Models.ExtensionState.get(null, 'isInboxHidden');
       if(isInboxHidden) {
-        var $inboxLink = InboxWhenReady.Models.AppState.get('dom', '$inboxLink');
+        var AppState = InboxWhenReady.Models.AppState;
+        var AppStateController = InboxWhenReady.Controllers.AppState;
+        var $inboxLink = AppState.get('dom', '$inboxLink');
         $inboxLink.innerHTML = 'Inbox';
+
+        removeUnreadCountFromPageTitle();
       }
       else {
         var inboxLabelChecker = InboxWhenReady.Models.ExtensionState.get(null, 'inboxLabelChecker');
@@ -180,6 +237,7 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
 
     if (appName === 'Gmail') {
       $inboxLink.innerHTML = inboxLinkLabel;
+      addUnreadCountBackToPageTitle();
     }
 
     ExtensionState.set(null, 'isInboxHidden', false);
@@ -196,12 +254,16 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
 
   function hideEmailView() {
     var $documentBody = AppState.get('dom', '$documentBody');
+
+    // Toggle CSS classes on the body element.
     $documentBody.classList.add('iwr-hide-email-view');
     $documentBody.classList.remove('iwr-show-email-view');
   }
 
   function showEmailView() {
     var $documentBody = AppState.get('dom', '$documentBody');
+
+    // Toggle CSS classes on the body element.
     $documentBody.classList.add('iwr-show-email-view');
     $documentBody.classList.remove('iwr-hide-email-view');
   }
@@ -269,6 +331,15 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
     if(isInboxViewActive) {
       if(isInboxHidden === true) {
         hideEmailView();
+
+        if(appName === 'Gmail') {
+          removeUnreadCountFromPageTitle();
+        }
+      }
+      else {
+        if(appName === 'Gmail') {
+          addUnreadCountBackToPageTitle();
+        }
       }
     }
     else {

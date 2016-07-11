@@ -146,6 +146,40 @@ describe('Gmail', function() {
     assert.equal(inboxIsVisible, true);
   });
 
+  it('Inbox unread count should be removed from page title if inbox view is active and inbox is hidden', function () {
+    browser.pause(200);
+    var title = browser.getTitle();
+    var expectedTitleStringFound = title.indexOf('Inbox - ') === 0;
+
+    assert.equal(expectedTitleStringFound, true);
+  });
+
+  it('Inbox unread count should be removed from page title if user switches from sent messages view to inbox view and inbox is hidden', function () {
+
+    browser.url(config.gmail.url + 'mail/u/0/#sent');
+    browser.pause(500);
+    browser.click(selectors.buttonBackToInbox);
+    browser.pause(750);
+    var title = browser.getTitle();
+    var expectedTitleStringFound = title.indexOf('Inbox - ') === 0;
+
+    console.log('title');
+    console.log(title);
+    console.log(expectedTitleStringFound);
+    assert.equal(expectedTitleStringFound, true);
+  });
+
+  it('Inbox unread count should be restored to page title if inbox view is active and inbox is visible', function () {
+    browser.pause(200);
+    browser.click(selectors.buttonShowMyInbox);
+    browser.pause(200);
+    var title = browser.getTitle();
+    var unreadCountRegex = / [(]\d+[)]/;
+    var isUnreadCountPresent = title.search(unreadCountRegex) !== -1;
+
+    assert.equal(isUnreadCountPresent, true);
+  });
+
   it.skip('Single message should be visible in btop view', function () {
     // @TODO;
     /*

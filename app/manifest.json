@@ -17,8 +17,8 @@
   },
   "options_page": "options.html",
   "web_accessible_resources": [
-       "scripts/content_scripts/*",
-       "scripts/content_scripts/*/*"
+    "scripts/content_scripts/*",
+    "scripts/content_scripts/*/*"
   ],
   "content_scripts": [
     {
