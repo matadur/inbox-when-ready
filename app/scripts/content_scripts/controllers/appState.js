@@ -83,9 +83,6 @@ InboxWhenReady.Controllers.AppState = (function () {
       activeView = location.hash;
     }
 
-    console.log('activeview');
-    console.log(activeView);
-
     AppState.set(null, 'activeView', activeView);
 
     addActiveViewClass();
@@ -197,7 +194,6 @@ InboxWhenReady.Controllers.AppState = (function () {
     var $inboxLink = AppState.get('dom', '$inboxLink');
     var inboxLinkLabel = $inboxLink.innerHTML;
     AppState.set('labels', 'inboxLink', inboxLinkLabel);
-    console.log(inboxLinkLabel);
   }
 
   function publicInit() {
