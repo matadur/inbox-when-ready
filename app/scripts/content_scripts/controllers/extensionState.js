@@ -186,8 +186,17 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
 
   function inboxPageTitleContainsUnreadCount() {
     var inboxPageTitle = document.title;
-    var unreadCountRegex = / [(]\d+[)]/;
+    var unreadCountRegex = /Inbox [(]\d+[)]/;
     var isUnreadCountPresent = inboxPageTitle.search(unreadCountRegex) !== -1;
+
+    return isUnreadCountPresent;
+  }
+
+  function inboxLinkLabelContainsUnreadCount() {
+    var $inboxLink = AppState.get('dom', '$inboxLink');
+    var inboxLinkLabel = $inboxLink.innerHTML;
+    var unreadCountRegex = / [(]\d+[)]/;
+    var isUnreadCountPresent = inboxLinkLabel.search(unreadCountRegex) !== -1;
 
     return isUnreadCountPresent;
   }
@@ -204,17 +213,26 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
 
   function hideInboxUnreadCount() {
     var inboxLabelChecker = false;
-    var $inboxLink = AppState.get('dom', '$inboxLink');
-    $inboxLink.innerHTML = 'Inbox';
+
+    if(inboxLinkLabelContainsUnreadCount()) {
+      AppStateController.saveInboxLinkLabel();
+      var $inboxLink = AppState.get('dom', '$inboxLink');
+      $inboxLink.innerHTML = 'Inbox';
+    }
 
     // #todo: Ugh ugh ugh. There must be a better way.
     inboxLabelChecker = setInterval(function() {
       var isInboxHidden = InboxWhenReady.Models.ExtensionState.get(null, 'isInboxHidden');
+
       if(isInboxHidden) {
         var AppState = InboxWhenReady.Models.AppState;
         var AppStateController = InboxWhenReady.Controllers.AppState;
-        var $inboxLink = AppState.get('dom', '$inboxLink');
-        $inboxLink.innerHTML = 'Inbox';
+
+        if(inboxLinkLabelContainsUnreadCount()) {
+          AppStateController.saveInboxLinkLabel();
+          var $inboxLink = AppState.get('dom', '$inboxLink');
+          $inboxLink.innerHTML = 'Inbox';
+        }
 
         removeUnreadCountFromPageTitle();
       }
@@ -222,7 +240,7 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
         var inboxLabelChecker = InboxWhenReady.Models.ExtensionState.get(null, 'inboxLabelChecker');
         clearInterval(inboxLabelChecker);
       }
-    }, 500);
+    }, 100);
 
     ExtensionState.set(null, 'inboxLabelChecker', inboxLabelChecker);
   }

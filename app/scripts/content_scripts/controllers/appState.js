@@ -164,7 +164,6 @@ InboxWhenReady.Controllers.AppState = (function () {
 
     if(appName === 'Gmail') {
       selectGmailSpecificDomElements();
-      saveInboxLinkLabel();
     }
   }
 
@@ -193,11 +192,12 @@ InboxWhenReady.Controllers.AppState = (function () {
     AppState.set('dom', '$actionButtonsContainer', $actionButtonsContainer);
   }
 
-  function saveInboxLinkLabel() {
+  function publicSaveInboxLinkLabel() {
     // Save the Inbox label with unread count before we do any DOM manipulation
     var $inboxLink = AppState.get('dom', '$inboxLink');
     var inboxLinkLabel = $inboxLink.innerHTML;
     AppState.set('labels', 'inboxLink', inboxLinkLabel);
+    console.log(inboxLinkLabel);
   }
 
   function publicInit() {
@@ -209,6 +209,7 @@ InboxWhenReady.Controllers.AppState = (function () {
   var publicMethods = {
     init: publicInit,
     getBodyElement: publicGetBodyElement,
+    saveInboxLinkLabel: publicSaveInboxLinkLabel,
     selectDomElements: publicSelectDomElements,
     updateActiveView: publicUpdateActiveView
   };
