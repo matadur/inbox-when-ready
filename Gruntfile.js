@@ -261,6 +261,12 @@ module.exports = function (grunt) {
       ]
     },
 
+    removelogging: {
+      dist: {
+        src: 'dist/scripts/**/*.js' // Each file will be overwritten with the output!
+      }
+    },
+
     // Auto buildnumber, exclude debug files. smart builds that event pages
     chromeManifest: {
       dist: {
@@ -323,7 +329,8 @@ module.exports = function (grunt) {
     'uglify',
     'copy',
     'usemin',
-    'compress'
+    'compress',
+    'removelogging'
   ]);
 
   grunt.registerTask('default', [
