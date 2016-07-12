@@ -5,7 +5,7 @@ var assert = require('assert');
 describe('Gmail', function() {
 
   var selectors = {};
-  selectors.inbox = '.aE3';
+  selectors.inbox = '.aDP';
   selectors.firstMessageInInbox = '.aDP .ae4 table tr:first-child [role="link"]';
   selectors.singleMessageWrapper = '.aHU';
 
@@ -163,9 +163,6 @@ describe('Gmail', function() {
     var title = browser.getTitle();
     var expectedTitleStringFound = title.indexOf('Inbox - ') === 0;
 
-    console.log('title');
-    console.log(title);
-    console.log(expectedTitleStringFound);
     assert.equal(expectedTitleStringFound, true);
   });
 

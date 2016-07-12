@@ -17,6 +17,8 @@
  * .aeN .ajl    left sidebar menu
  * .aeV .md > div:nth-child(1)      account storage space used (shown
  *                                  beneath message list)
+ * .aDP          inbox messages list
+ * .aKh          inbox tabs (primary, social, promos etc)
  *
  * --- /Gmail ---
  *
@@ -39,7 +41,9 @@
  */
 
 /* --- Gmail --- */
-.aE3,
+/*.aE3, */
+.aDP,
+.aKh,
 .aeN .ajl,
 .ar5 {
   visibility: hidden !important; /* important rules override native styles */
@@ -81,7 +85,9 @@
  */
 
 /* --- Gmail --- */
-.iwr-active-view--inbox.iwr-show-email-view .aE3,
+/* .iwr-active-view--inbox.iwr-show-email-view .aE3, */
+.iwr-active-view--inbox.iwr-show-email-view .aDP,
+.iwr-active-view--inbox.iwr-show-email-view .aKh,
 .iwr-active-view--inbox.iwr-show-email-view .aeV,
 .iwr-active-view--inbox.iwr-show-email-view .aeG,
 .iwr-active-view--inbox.iwr-show-email-view .ar5 {
@@ -96,7 +102,9 @@
  */
 
  /* --- Gmail --- */
- .iwr-active-view--inbox.iwr-hide-email-view .aE3,
+/* .iwr-active-view--inbox.iwr-hide-email-view .aE3, */
+ .iwr-active-view--inbox.iwr-hide-email-view .aDP,
+ .iwr-active-view--inbox.iwr-hide-email-view .aKh,
  .iwr-active-view--inbox.iwr-hide-email-view .ar5 {
   visibility: hidden !important;
 }
@@ -116,7 +124,9 @@
   display: none !important;
 }
 
-.iwr-active.iwr-hide-email-view .aE3 {
+/*.iwr-active.iwr-hide-email-view .aE3 */
+.iwr-active.iwr-hide-email-view .aDP,
+.iwr-active.iwr-hide-email-view .aKh {
   display: none !important;
 }
 /* --- /InboxByGmail --- */
@@ -171,7 +181,9 @@
  */
 
 /* --- Gmail --- */
-.xE .aE3,
+/*.xE .aE3, */
+.xE .aDP,
+.xE .aKh,
 .xE .aeN .ajl,
 .xE .aeV,
 .xE .aeG {
