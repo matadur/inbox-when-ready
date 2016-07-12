@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.11] - 2016-07-12
+### Added
+- When inbox is hidden, document title should not include unread message count.
+- Flash message to encourage social share, review or feedback.
+- More test coverage.
+
+### Fixed
+- Should preserve unread message count if Gmail loads on non-inbox view.
+- Hide function should target .aDP and .aKh elements. (Previously targetted .aE3, which was not reliably present for all users.) Props to @HansCronau for help debugging this issue.
+- Should support Inbox by Gmail.
+
+### Changed
+- Big JavaScript refactor to shift in the direction of MVC and modular patterns.
+
 ## [1.1.10] - 2016-07-03
 ### Changed
 - Account metadata (displayed beneath inbox) now remains visible when inbox is hidden
@@ -15,12 +29,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Inbox should remain visible on compose screen if user wants to see it.
 
 ## [1.1.8] - 2016-06-15
-#Added
+### Added
 - Google Analytics event tracking.
 - Extension now saves load count and first load timestamp to chrome.storage.
 
 ## [1.1.7] - 2016-06-15
-#Added
+###Added
 - Validation tests.
 - Install helper script (for LDE and a future CI setup).
 
