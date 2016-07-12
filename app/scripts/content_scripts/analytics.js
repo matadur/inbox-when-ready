@@ -39,12 +39,65 @@ InboxWhenReady.Analytics = (function () {
   }
 
   function bindListeners() {
-    $(document).on('InboxWhenReady:extensionLoaded', function(e, from, to){
+    $(document).on('InboxWhenReady:extensionLoaded', function(){
       InboxWhenReady.Analytics.sendExtensionLoadedEvent();
     });
 
-    $(document).on('InboxWhenReady:extensionFirstLoaded', function(e, from, to){
+    $(document).on('InboxWhenReady:extensionFirstLoaded', function(){
       InboxWhenReady.Analytics.sendExtensionFirstLoadEvent();
+    });
+
+    $(document).on('InboxWhenReady:flashMessageSeen', function(e, flashMessageId){
+      var appName = AppState.get('meta', 'name');
+
+      // Send tracking event
+      var event = {
+        'category' : appName,
+        'action' : 'Saw flash message',
+        'label' : flashMessageId
+      };
+
+      InboxWhenReady.Analytics.sendEvent(event);
+    });
+
+
+    $(document).on('InboxWhenReady:flashMessageFollow', function(e, flashMessageId){
+      var appName = AppState.get('meta', 'name');
+
+      // Send tracking event
+      var event = {
+        'category' : appName,
+        'action' : 'Followed flash message',
+        'label' : flashMessageId
+      };
+
+      InboxWhenReady.Analytics.Analytics.sendEvent(event);
+    });
+
+    $(document).on('InboxWhenReady:flashMessageSuppress', function(e, flashMessageId){
+      var appName = AppState.get('meta', 'name');
+
+      // Send tracking event
+      var event = {
+        'category' : appName,
+        'action' : 'Suppressed flash message',
+        'label' : flashMessageId
+      };
+
+      InboxWhenReady.Analytics.sendEvent(event);
+    });
+
+    $(document).on('InboxWhenReady:flashMessageSuppressForever', function(e, flashMessageId){
+      var appName = AppState.get('meta', 'name');
+
+      // Send tracking event
+      var event = {
+        'category' : appName,
+        'action' : 'Suppressed flash message forever',
+        'label' : flashMessageId
+      };
+
+      InboxWhenReady.Analytics.sendEvent(event);
     });
   }
 

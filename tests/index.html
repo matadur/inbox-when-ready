@@ -21,9 +21,26 @@
     <!-- endbower -->
 
     <!-- include source files here... -->
+    <script>
+        var chrome = {};
+        chrome.storage = {};
+        chrome.storage.sync = {};
+        chrome.runtime = {};
+        chrome.runtime.error = false;
+        chrome.storage.sync.get = function(key) {
+            var returnValue = [];
+            console.log('chrome.storage called wtih key');
+            console.log(key);
+            return returnValue;
+        }
+    </script>
+    <script src="../app/scripts/content_scripts/lib/zepto.js"></script>
+    <script src="../app/scripts/content_scripts/models/appState.js"></script>
+    <script src="../app/scripts/content_scripts/models/storage.js"></script>
+    <script src="../app/scripts/content_scripts/controllers/flashMessages.js"></script>
 
     <!-- include spec files here... -->
-    <script src="spec/test.js"></script>
+    <script src="unit/controllers/flashMessages.spec.js"></script>
 
     <script>mocha.run()</script>
 </body>

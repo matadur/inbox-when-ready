@@ -33,11 +33,11 @@
         "scripts/content_scripts/lib/zepto.js",
         "scripts/content_scripts/models/appState.js",
         "scripts/content_scripts/models/extensionState.js",
-        "scripts/content_scripts/models/flashMessage.js",
+        "scripts/content_scripts/models/flashMessages.js",
         "scripts/content_scripts/models/storage.js",
         "scripts/content_scripts/controllers/appState.js",
         "scripts/content_scripts/controllers/extensionState.js",
-        "scripts/content_scripts/controllers/flashMessage.js",
+        "scripts/content_scripts/controllers/flashMessages.js",
         "scripts/content_scripts/analytics.js",
         "scripts/content_scripts/utils.js",
         "scripts/content_scripts/app.js"

@@ -6,6 +6,7 @@ InboxWhenReady.Models = InboxWhenReady.Models || {};
 InboxWhenReady.Models.Storage = (function () {
 
   var storage = {};
+  storage.flashMessageLog = [];
 
   function publicSet(key, value) {
     var userData = {};
@@ -25,7 +26,7 @@ InboxWhenReady.Models.Storage = (function () {
       value = storage[key];
     }
     else {
-      console.error('Could not get data for key "' + key + '" from storage.');
+      console.warn('Could not get data for key "' + key + '" from storage.');
     }
 
     return value;

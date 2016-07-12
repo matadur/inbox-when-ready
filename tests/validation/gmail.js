@@ -13,7 +13,11 @@ describe('Gmail', function() {
   selectors.buttonHideMyInbox = '#hide_my_inbox';
   selectors.buttonBackToInbox = 'a[href="https://mail.google.com/mail/u/0/#inbox"]';
   selectors.buttonCompose = '.aic [role="button"]';
+  selectors.buttonFlashMessageFollow = '#iwr_flash_button--follow';
+  selectors.buttonFlashMessageSuppress = '#iwr_flash_button--suppress';
+  selectors.buttonFlashMessageSuppressForever = '#iwr_flash_button--suppress_forever';
   selectors.buttonsPagination = '.ar5';
+  selectors.flashMessage = '.iwr-flash-message';
   selectors.settingsTitle = 'h2.dt';
 
   selectors.mainArea = '[role="main"]';
@@ -177,7 +181,7 @@ describe('Gmail', function() {
     assert.equal(isUnreadCountPresent, true);
   });
 
-  it.skip('Single message should be visible in btop view', function () {
+  it('Single message should be visible in btop view', function () {
     // @TODO;
     /*
     browser.click(selectors.buttonShowMyInbox);
@@ -278,4 +282,76 @@ describe('Gmail', function() {
     var paginationButtonsAreVisible = browser.isVisible(selectors.buttonsPagination)[1];
     assert.equal(paginationButtonsAreVisible, true);
   });
+
+/*
+  it('Should not show flash message 1 if extension loaded count is less than 20, inbox view is active and inbox is hidden', function () {
+      // TODO - show flash message
+
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+      var flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, false);
+  });
+
+  it('Should show flash message 1 if extension loaded count is greater than 20, inbox view is active and inbox is hidden', function () {
+      // TODO - show flash message
+
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+      var flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, true);
+  });
+
+  it('Should not show flash message 1 if extension loaded count is greater than 20, inbox view is active and inbox is visible', function () {
+      // TODO - show flash message
+
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+      browser.click(selectors.buttonShowMyInbox);
+      browser.pause(200);
+      var flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, false);
+  });
+
+  it('Should hide flash message if follow button is clicked', function () {
+      // TODO - show flash message
+
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+      var flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, true);
+
+      browser.click(selectors.buttonFlashMessageFollow);
+      browser.pause(100);
+      flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, false);
+  });
+
+  it('Should hide flash message if suppress button is clicked', function () {
+      // TODO - show flash message
+
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+      var flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, true);
+
+      browser.click(selectors.buttonFlashMessageSuppress);
+      browser.pause(100);
+      flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, false);
+  });
+
+  it('Should hide flash message if suppress forever button is clicked', function () {
+      // TODO - show flash message
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+      var flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, true);
+
+      browser.click(selectors.buttonFlashMessageSuppressForever);
+      browser.pause(100);
+      flashMessageIsVisible = browser.isVisible(selectors.flashMessage);
+      assert.equal(flashMessageIsVisible, false);
+  });
+*/
 });

@@ -56,7 +56,7 @@ InboxWhenReady.Controllers.AppState = (function () {
     var $inboxLink = null;
 
     var appIsLoaded = setInterval(function() {
-      // @TODO;
+
       console.log('Waiting for ' + appName + ' to load...');
 
       $inboxLink = InboxWhenReady.Utils.getDomElement(inboxLink.selector, inboxLink.match);

@@ -3,21 +3,16 @@
 var InboxWhenReady = InboxWhenReady || {};
 InboxWhenReady.Models = InboxWhenReady.Models || {};
 
-InboxWhenReady.Models.FlashMessage = (function () {
+InboxWhenReady.Models.FlashMessages = (function () {
 
-  var state = {};
-  state.app = null; // InboxByGmail or Gmail
-  state.appIsLoaded = false;
-  state.activeView = null;
-  state.inboxHidden = true;
-  state.actionBarInterval = false;
-  state.inboxLabelChecker = false;
-  state.mustReInit = false;
+  var messages = [];
 
-  return state;
+  function publicAdd(flashMessage) {
+    messages.push(flashMessage);
+  }
 
   function publicGet(categoryKey, key) {
-    return state[categoryKey][key];
+    return messages;
   };
 
   function publicSet(categoryKey, key, value) {
@@ -25,6 +20,7 @@ InboxWhenReady.Models.FlashMessage = (function () {
   };
 
   var publicMethods = {
+    add : publicAdd,
     get : publicGet,
     set : publicSet
   };

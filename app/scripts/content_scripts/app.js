@@ -11,6 +11,7 @@ InboxWhenReady.App = (function () {
   var Analytics = InboxWhenReady.Analytics;
   var AppStateController = InboxWhenReady.Controllers.AppState;
   var ExtensionStateController = InboxWhenReady.Controllers.ExtensionState;
+  var FlashMessagesController = InboxWhenReady.Controllers.FlashMessages;
   var Storage = InboxWhenReady.Models.Storage;
   var Utils = InboxWhenReady.Utils;
 
@@ -21,11 +22,8 @@ InboxWhenReady.App = (function () {
       AppStateController.updateActiveView();
 
       Analytics.init();
+      FlashMessagesController.init();
       ExtensionStateController.init();
-    });
-
-    $(document).on('InboxWhenReady:extensionLoaded', function(e, from, to){
-      console.log('InboxWhenReady has loaded.');
     });
   }
 

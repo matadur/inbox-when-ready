@@ -32,7 +32,6 @@
  *
  */
 
-
 /*
  * To begin, we hide *all* elements that might give a clue
  * about inbox status. We must do this before InboxWhenReady loads,
@@ -214,13 +213,19 @@
   min-width: 62px !important;
 }
 /* --- /Gmail --- */
-
-
 .iwr-flash-message {
   margin-top: 10px;
   padding: 10px;
   border: 1px solid #e5e5e5;
   background: #f1f1f1;
+
+  /* Hide flash messages by default */
+  display: none;
+}
+
+/* Only ever show a flash message when the inbox view is active and inbox is hidden */
+.iwr-active-view--inbox.iwr-hide-email-view .iwr-flash-message {
+  display: block;
 }
 
 .iwr-flash-message h2 {
