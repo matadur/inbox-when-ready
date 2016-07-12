@@ -363,11 +363,6 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
         }
       }
     }
-    else {
-      if(isInboxHidden === true) {
-        showEmailView(); //@TODO is this necessary?
-      }
-    }
 
     if(appName === 'Gmail') {
       if(location.hash.indexOf('#settings') === 0) {
