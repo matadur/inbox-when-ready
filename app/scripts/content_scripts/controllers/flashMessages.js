@@ -144,9 +144,6 @@ InboxWhenReady.Controllers.FlashMessages = (function () {
     var canShowFlashMessage = true;
     var flashMessageLogEntry = getFlashMessageLogEntry(flashMessageId);
 
-    console.log('flashMessageLogEntry');
-    console.log(flashMessageLogEntry);
-
     if(wasFollowedRecently(flashMessageLogEntry)) {
       canShowFlashMessage = false;
     }
