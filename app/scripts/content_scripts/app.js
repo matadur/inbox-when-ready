@@ -9,6 +9,7 @@ console.log('InboxWhenReady loading...');
 InboxWhenReady.App = (function () {
 
   var Analytics = InboxWhenReady.Analytics;
+  var AppState = InboxWhenReady.Models.AppState;
   var AppStateController = InboxWhenReady.Controllers.AppState;
   var ExtensionStateController = InboxWhenReady.Controllers.ExtensionState;
   var FlashMessagesController = InboxWhenReady.Controllers.FlashMessages;
@@ -18,11 +19,17 @@ InboxWhenReady.App = (function () {
   function bindListeners() {
     $(document).on('InboxWhenReady:appLoaded', function(e, from, to){
       console.log('Initialising InboxWhenReady...');
+      var appName = AppState.get('meta', 'name');
       AppStateController.getBodyElement();
       AppStateController.updateActiveView();
 
       Analytics.init();
-      FlashMessagesController.init();
+
+      // Flash messages are only supported on Gmail for now.
+      if(appName === 'Gmail') {
+        FlashMessagesController.init();
+      }
+
       ExtensionStateController.init();
     });
   }
