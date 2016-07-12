@@ -1,6 +1,6 @@
 {
-  "name": "Inbox When Ready",
-  "version": "1.1.10",
+  "name": "Inbox When Ready for Gmail™",
+  "version": "1.1.12",
   "manifest_version": 2,
   "description": "Protect your focus... hide your Gmail inbox by default.",
   "icons": {

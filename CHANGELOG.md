@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.12] - 2016-07-12
+### Changed
+- Rename app "Inbox When Ready for Gmail" as per Chrome Web Store guidelines.
+
 ## [1.1.11] - 2016-07-12
 ### Added
 - When inbox is hidden, document title should not include unread message count.
