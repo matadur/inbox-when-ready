@@ -239,6 +239,10 @@ InboxWhenReady.Controllers.FlashMessages = (function () {
     return flashMessageLogEntry;
   }
 
+  // Testing flash messages in development?
+  // This console command might come in handy:
+  //
+  //   chrome.storage.local.clear()
   function registerFlashMessages() {
     registerFlashMessageSharePrompt();
 
@@ -251,7 +255,7 @@ InboxWhenReady.Controllers.FlashMessages = (function () {
     var shouldFlashMessageBeRegistered = extensionLoadedCount > 20;
 
     if(shouldFlashMessageBeRegistered) {
-      var flashMessageId = 5;
+      var flashMessageId = 1;
       var flashMessageTitle = 'Thanks for using Inbox When Ready.';
       var flashMessageContent = "<p>I hope it's helping you protect your focus. If you have a moment, please support this extension by:</p>\
       <ol>\
