@@ -71,7 +71,7 @@ InboxWhenReady.Analytics = (function () {
         'label' : flashMessageId
       };
 
-      InboxWhenReady.Analytics.Analytics.sendEvent(event);
+      InboxWhenReady.Analytics.sendEvent(event);
     });
 
     $(document).on('InboxWhenReady:flashMessageSuppress', function(e, flashMessageId){
@@ -106,6 +106,11 @@ InboxWhenReady.Analytics = (function () {
   }
 
   function publicSendEvent(event) {
+    // Event label must be a string, otherwise Google Analytics will reject the event.
+    if(!isNaN(event.label)) {
+      event.label = event.label.toString();
+    }
+
     // Send to Google Analytics
     chrome.runtime.sendMessage(event, function() {
       // Do nothing.
