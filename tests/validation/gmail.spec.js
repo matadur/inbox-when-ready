@@ -181,7 +181,7 @@ describe('Gmail', function() {
     assert.equal(isUnreadCountPresent, true);
   });
 
-  it('Single message should be visible in btop view', function () {
+  it.skip('Single message should be visible in btop view', function () {
     // @TODO;
     /*
     browser.click(selectors.buttonShowMyInbox);
@@ -203,7 +203,7 @@ describe('Gmail', function() {
     browser.switchTab(tabIds[1]);
     browser.pause(4000);
     */
-    this.timeout(30000);
+
     browser.pause(200);
     browser.newWindow(config.gmail.url + 'mail/u/0/?ui=2&view=btop&ver=1nnj51jn5rorm&search=inbox&th=155b0700f976403b&cvid=1');
     browser.pause(200);

@@ -10,8 +10,9 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './tests/validation/gmail.js',
-        './tests/validation/inboxByGmail.js'
+        './tests/unit/controllers/flashMessages.spec.js',
+        './tests/validation/gmail.spec.js',
+        './tests/validation/inboxByGmail.spec.js'
     ],
     // Patterns to exclude.
     exclude: [
