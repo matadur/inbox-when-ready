@@ -329,8 +329,7 @@ module.exports = function (grunt) {
     'uglify',
     'copy',
     'usemin',
-    'compress',
-    'removelogging'
+    'compress'
   ]);
 
   grunt.registerTask('default', [
