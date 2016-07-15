@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.13] - 2016-07-15
+### Fixed
+- Show / hide function should work on Gmail when inbox tabs are disabled. Props to @HansCronau for help debugging this issue.
+- Inbox link label unread count should stay hidden when inbox is hidden.
+
+### Changed
+- Flash messages should only be visible when inbox is visible, not the other way around.
+
+
 ## [1.1.12] - 2016-07-12
 ### Changed
 - Rename app "Inbox When Ready for Gmail" as per Chrome Web Store guidelines.
