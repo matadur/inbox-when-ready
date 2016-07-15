@@ -19,6 +19,7 @@
  *                                  beneath message list)
  * .aDP          inbox messages list
  * .aKh          inbox tabs (primary, social, promos etc)
+ * [id=":2o"]    inbox messages list (if inbox tabs are disabled)
  *
  * --- /Gmail ---
  *
@@ -43,6 +44,7 @@
 /*.aE3, */
 .aDP,
 .aKh,
+[id=":2o"],
 .aeN .ajl,
 .ar5 {
   visibility: hidden !important; /* important rules override native styles */
@@ -87,6 +89,7 @@
 /* .iwr-active-view--inbox.iwr-show-email-view .aE3, */
 .iwr-active-view--inbox.iwr-show-email-view .aDP,
 .iwr-active-view--inbox.iwr-show-email-view .aKh,
+.iwr-active-view--inbox.iwr-show-email-view [id=":2o"],
 .iwr-active-view--inbox.iwr-show-email-view .aeV,
 .iwr-active-view--inbox.iwr-show-email-view .aeG,
 .iwr-active-view--inbox.iwr-show-email-view .ar5 {
@@ -104,6 +107,7 @@
 /* .iwr-active-view--inbox.iwr-hide-email-view .aE3, */
  .iwr-active-view--inbox.iwr-hide-email-view .aDP,
  .iwr-active-view--inbox.iwr-hide-email-view .aKh,
+ .iwr-active-view--inbox.iwr-hide-email-view [id=":2o"],
  .iwr-active-view--inbox.iwr-hide-email-view .ar5 {
   visibility: hidden !important;
 }
@@ -125,7 +129,8 @@
 
 /*.iwr-active.iwr-hide-email-view .aE3 */
 .iwr-active.iwr-hide-email-view .aDP,
-.iwr-active.iwr-hide-email-view .aKh {
+.iwr-active.iwr-hide-email-view .aKh,
+.iwr-active.iwr-hide-email-view [id=":2o"] {
   display: none !important;
 }
 /* --- /InboxByGmail --- */
@@ -183,6 +188,7 @@
 /*.xE .aE3, */
 .xE .aDP,
 .xE .aKh,
+.xE [id=":2o"],
 .xE .aeN .ajl,
 .xE .aeV,
 .xE .aeG {
