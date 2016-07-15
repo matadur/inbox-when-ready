@@ -222,8 +222,6 @@ InboxWhenReady.Controllers.FlashMessages = (function () {
     var flashMessageLogEntry = null;
     var flashMessageLog = Storage.get('flashMessageLog');
 
-    console.log(flashMessageLog);
-
     if(flashMessageLog) {
       $.each(flashMessageLog, function(index, logEntry) {
         if(logEntry.id === flashMessageId) {
