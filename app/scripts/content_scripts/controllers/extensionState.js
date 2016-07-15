@@ -193,7 +193,11 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
   }
 
   function inboxLinkLabelContainsUnreadCount() {
-    var $inboxLink = AppState.get('dom', '$inboxLink');
+    var inboxLinkSelector = AppState.get('domSelectors', 'inboxLink');
+    var $inboxLink = InboxWhenReady.Utils.getDomElement(inboxLinkSelector.selector, inboxLinkSelector.match);
+    // Update our DOM model seeing as we just fetched the element again.
+    AppState.set('dom', '$inboxLink', $inboxLink);
+
     var inboxLinkLabel = $inboxLink.innerHTML;
     var unreadCountRegex = / [(]\d+[)]/;
     var isUnreadCountPresent = inboxLinkLabel.search(unreadCountRegex) !== -1;
