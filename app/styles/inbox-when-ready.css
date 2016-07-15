@@ -229,8 +229,8 @@
   display: none;
 }
 
-/* Only ever show a flash message when the inbox view is active and inbox is hidden */
-.iwr-active-view--inbox.iwr-hide-email-view .iwr-flash-message {
+/* Only ever show a flash message when the inbox view is active and inbox is visible */
+.iwr-active-view--inbox.iwr-show-email-view .iwr-flash-message {
   display: block;
 }
 
