@@ -28,8 +28,8 @@ InboxWhenReady.Models.AppState = (function () {
   state.domSelectors = {};
 
   state.labels = {};
-  state.labels.inboxLink = null;
-  state.labels.inboxViewPageTitle = null;
+  state.labels.inboxLink = "Inbox"; // Must set these to Inbox in case there are no unread messages.
+  state.labels.inboxViewPageTitle = "Inbox";
 
 
   function isGmailInboxViewActive() {
