@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.14] - 2016-07-16
+### Fixed
+- Inbox link label should not be blank if there are no unread messages. Props to Mohsin Amarjee for help debugging this issue.
+
 ## [1.1.13] - 2016-07-15
 ### Fixed
 - Show / hide function should work on Gmail when inbox tabs are disabled. Props to @HansCronau for help debugging this issue.
