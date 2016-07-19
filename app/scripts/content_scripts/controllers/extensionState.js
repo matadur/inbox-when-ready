@@ -218,8 +218,9 @@ InboxWhenReady.Controllers.ExtensionState = (function () {
   function hideInboxUnreadCount() {
     var inboxLabelChecker = false;
 
+    AppStateController.saveInboxLinkLabel();
+
     if(inboxLinkLabelContainsUnreadCount()) {
-      AppStateController.saveInboxLinkLabel();
       var $inboxLink = AppState.get('dom', '$inboxLink');
       $inboxLink.innerHTML = 'Inbox';
     }
