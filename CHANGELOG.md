@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.15] - 2016-07-18
+### Added
+- Support for Gmail custom views (unread first, starred first, etc)
+
+### Fixed
+- Inbox link label unread count should remain accurate when toggling inbox visibility. Props to Mohsin Amarjee for help debugging this issue.
+
 ## [1.1.14] - 2016-07-16
 ### Fixed
 - Inbox link label should not be blank if there are no unread messages. Props to Mohsin Amarjee for help debugging this issue.
