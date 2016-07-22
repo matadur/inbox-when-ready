@@ -2,6 +2,8 @@
 
 ### Protect your focus... hide your Gmail inbox by default.
 
+![Inbox When Ready screencast](https://inboxwhenready.org/images/screencast.gif)
+
 Inbox When Ready is a Chrome extension that hides your Gmail inbox by default. All other Gmail views remain accessible as normal, so you can quickly search your archive and compose messages *without getting distracted*.
 
 Ahhhhhh.
