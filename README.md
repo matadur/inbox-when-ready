@@ -8,7 +8,7 @@ Ahhhhhh.
 
 P.S.  When you actually want to see your inbox, press "Show my Inbox". Easy!
 
-![Inbox When Ready screencast](https://inboxwhenready.org/images/screencast.gif)
+<img src="https://inboxwhenready.org/images/screencast.gif" alt="Inbox When Ready screencast" width="650">
 
 ### Why would I use this?
 
