@@ -1,1 +1,5 @@
 grunt build
+
+echo 'Build complete. Now running tests on built version...';
+
+./node_modules/.bin/wdio wdio-dist.conf.js
