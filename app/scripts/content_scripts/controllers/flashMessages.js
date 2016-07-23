@@ -250,13 +250,13 @@ InboxWhenReady.Controllers.FlashMessages = (function () {
     var shouldFlashMessageBeRegistered = extensionLoadedCount > 20;
 
     if(shouldFlashMessageBeRegistered) {
-      var flashMessageId = 1;
+      var flashMessageId = 100;
       var flashMessageTitle = 'Thanks for using Inbox When Ready.';
-      var flashMessageContent = "<p>I hope it's helping you protect your focus. If you have a moment, please support this extension by:</p>\
+      var flashMessageContent = "<p>I hope it's helping you protect your focus. If you have a moment, please support this extension:</p>\
       <ol>\
-        <li><strong>Inviting a friend to give it a try.</strong><br>Click links to <a href='https://www.facebook.com/sharer/sharer.php?u=https%3A//chrome.google.com/webstore/detail/inbox-when-ready/cdedhgmbfjhobfnphaoihdfmnjidcpim?hl=en' target='_blank'>share on Facebook</a>, <a href='https://twitter.com/home?status=My%20new%20favourite%20%23chrome%20%23extension%3A%0Ahttps%3A//chrome.google.com/webstore/detail/inbox-when-ready/cdedhgmbfjhobfnphaoihdfmnjidcpim?hl=en' target='_blank'>send a tweet</a> or <a href='mailto:?mailto:asd?Subject=Inbox%20When%20Ready&Body=Dear%20friend%2C%0AInbox%20When%20Ready%20is%20my%20new%20favourite%20Chrome%20extension%20for%20Gmail.%20It%20protects%20your%20focus%20by%20making%20your%20inbox%20hidden%20by%20default.%20Give%20it%20a%20try%3A%0A%0Ahttps%3A//chrome.google.com/webstore/detail/inbox-when-ready/cdedhgmbfjhobfnphaoihdfmnjidcpim%3Fhl%3Den%0A%0ALots%20of%20love%2C'>share by email</a>. Your friends will love you even more :)</li>\
-        <li style='margin-top: 1em;'><strong>Rating the extension on the Chrome Web Store.</strong><br>You can do that <a href='https://chrome.google.com/webstore/detail/inbox-when-ready/cdedhgmbfjhobfnphaoihdfmnjidcpim/reviews?hl=en' target='_blank'>here</a>.</li>\
-        <li style='margin-top: 1em;'><strong>Sending me feedback.</strong><br>I'd love to hear your thoughts. You can reach me on <a href='mailto:peter@schon.io?subject=Inbox+When+Ready'>peter@schon.io</a>.</li>\
+        <li><strong>Invite a friend to give it a try.</strong><br>You could <a href='https://www.facebook.com/sharer/sharer.php?u=https://inboxwhenready.org' target='_blank'>share on Facebook</a>, <a href='https://twitter.com/home?status=My%20new%20favourite%20%23chrome%20%23extension%3A%0Ahttps%3A//inboxwhenready.org' target='_blank'>send a tweet</a> or <a href='mailto:?mailto:?Subject=Inbox%20When%20Ready&Body=Dear%20friend%2C%0AInbox%20When%20Ready%20is%20my%20new%20favourite%20Chrome%20extension%20for%20Gmail.%20It%20protects%20your%20focus%20by%20making%20your%20inbox%20hidden%20by%20default.%0A%0AGive%20it%20a%20try%3A%0Ahttps%3A//inboxwhenready.org%0A%0ALots%20of%20love%2C'>share by email</a>. Your friends will love you even more :)</li>\
+        <li style='margin-top: 1em;'><strong>Rate the extension on the Chrome Web Store.</strong><br>You can do that <a href='https://chrome.google.com/webstore/detail/inbox-when-ready/cdedhgmbfjhobfnphaoihdfmnjidcpim/reviews?hl=en' target='_blank'>here</a>.</li>\
+        <li style='margin-top: 1em;'><strong>Send me feedback.</strong><br>I'd love to hear your thoughts. You can reach me on <a href='mailto:peter@inboxwhenready.org?subject=Inbox+When+Ready'>peter@inboxwhenready.org</a>.</li>\
       </ol>\
       <p>With love,<br>Peter</p>\
       <div class='T-I J-J5-Ji T-I-KE' role='button' tabindex='0' style='-webkit-user-select: none;' id='iwr_flash_button--follow'><span class=''>I did it</span></div>\
