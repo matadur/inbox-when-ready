@@ -1,21 +1,35 @@
 SUITE="all"
+GREP="0"
 
 echo 'Remember: you need to start Selenium server before running these tests. To do that, run:'
 echo './node_modules/.bin/selenium-standalone start\n'
 
 echo 'Running tests on the unpackaged development files...'
 
-if [ -z "$1" ]
+# Should we run all the specs, or just a specified suite?
+
+if [ -n "$1" ]
 then
-  echo 'Running all test specs...'
-else
   SUITE=$1
   echo "Running $SUITE test suite..."
+fi
+
+# Should we grep for a particular test?
+if [ -n "$2" ]
+then
+  GREP=$2
+  echo "\nGrepping for: "
+  echo "\t$GREP"
 fi
 
 if [ "$SUITE" = "all" ]
 then
   ./node_modules/.bin/wdio wdio-dev.conf.js
 else
-  ./node_modules/.bin/wdio wdio-dev.conf.js --suite $SUITE
+  if [ "$GREP" != "0" ]
+  then
+    ./node_modules/.bin/wdio wdio-dev.conf.js --suite $SUITE --mochaOpts.grep "$GREP"
+  else
+    ./node_modules/.bin/wdio wdio-dev.conf.js --suite $SUITE
+  fi
 fi
