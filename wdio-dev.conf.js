@@ -15,9 +15,18 @@ exports.config = {
     //
     specs: [
         //'./tests/unit/controllers/flashMessages.spec.js',
-        './tests/validation/gmail.spec.js',
-        './tests/validation/inboxByGmail.spec.js'
+        './tests/validation/*.spec.js'
     ],
+
+    suites: {
+        gmail: [
+            './tests/validation/gmail.spec.js'
+        ],
+        inboxByGmail: [
+            './tests/validation/inboxByGmail.spec.js'
+        ]
+    },
+
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'

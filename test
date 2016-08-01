@@ -1,9 +1,21 @@
-# You need to start Selenium server before running these tests.
-# ./node_modules/.bin/selenium-standalone start
+SUITE="all"
 
 echo 'Remember: you need to start Selenium server before running these tests. To do that, run:'
 echo './node_modules/.bin/selenium-standalone start\n'
 
-
 echo 'Running tests on the unpackaged development files...'
-./node_modules/.bin/wdio wdio-dev.conf.js
+
+if [ -z "$1" ]
+then
+  echo 'Running all test specs...'
+else
+  SUITE=$1
+  echo "Running $SUITE test suite..."
+fi
+
+if [ "$SUITE" = "all" ]
+then
+  ./node_modules/.bin/wdio wdio-dev.conf.js
+else
+  ./node_modules/.bin/wdio wdio-dev.conf.js --suite $SUITE
+fi
