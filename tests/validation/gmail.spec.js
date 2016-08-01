@@ -25,6 +25,10 @@ describe('Gmail', function() {
 
 
   before(function() {
+    var chai = require('chai');
+    global.expect = chai.expect;
+    chai.Should();
+
     this.timeout(20000);
     browser.url(config.gmail.url);
     browser.setValue('#Email', config.google.username);
@@ -86,16 +90,18 @@ describe('Gmail', function() {
     browser.url(config.gmail.url + 'mail/u/0/#search/test');
     browser.pause(1000);
     browser.waitForExist(selectors.mainArea, 5000);
-    var mainIsVisible = browser.isVisible(selectors.mainArea);
-    assert.equal(mainIsVisible, true);
+
+    var mainElementHeight = browser.getElementSize(selectors.mainArea, 'height');
+    expect(mainElementHeight).to.be.above(10);
   });
 
   it('Should show sent messages even if inbox is hidden', function () {
     browser.url(config.gmail.url + 'mail/u/0/#sent');
     browser.pause(1000);
     browser.waitForExist(selectors.mainArea, 5000);
-    var mainIsVisible = browser.isVisible(selectors.mainArea);
-    assert.equal(mainIsVisible, true);
+
+    var mainElementHeight = browser.getElementSize(selectors.mainArea, 'height');
+    expect(mainElementHeight).to.be.above(10);
   });
 
   it('Should show sent messages if app is loaded on sent messages view', function () {
@@ -104,8 +110,9 @@ describe('Gmail', function() {
     browser.pause(300);
     browser.refresh();
     browser.waitForExist(selectors.mainArea, 10000);
-    var mainIsVisible = browser.isVisible(selectors.mainArea);
-    assert.equal(mainIsVisible, true);
+
+    var mainElementHeight = browser.getElementSize(selectors.mainArea, 'height');
+    expect(mainElementHeight).to.be.above(10);
   });
 
   it('Should make the inbox hidden and the "show" button visible if app is loaded on sent messages view, then navigated back to inbox view.', function () {
@@ -209,8 +216,8 @@ describe('Gmail', function() {
     browser.pause(200);
     browser.waitForExist(selectors.mainArea, 30000);
 
-    var mainIsVisible = browser.isVisible(selectors.mainArea);
-    assert.equal(mainIsVisible, true);
+    var mainElementHeight = browser.getElementSize(selectors.mainArea, 'height');
+    expect(mainElementHeight).to.be.above(10);
   });
 
   it('Should keep inbox hidden when switching from individual message view back to inbox', function () {
