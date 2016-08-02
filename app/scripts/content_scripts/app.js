@@ -48,23 +48,3 @@ InboxWhenReady.App = (function () {
 })();
 
 InboxWhenReady.App.init();
-
-
-InboxSDK.load('1.0', 'sdk_inboxwhenready_a2ecee1991').then(function(sdk){
-
-  sdk.Router.handleListRoute(sdk.Router.NativeListRouteIDs.ANY_LIST, function(inboxView) {
-
-    var currentRoute = sdk.Router.getCurrentRouteView();
-    var currentRouteId = currentRoute.getRouteID();
-
-    if(currentRouteId.indexOf('inbox') !== -1) {
-      console.log('Inbox view is active');
-      $('body').addClass('iwr-active-view--inbox');
-    }
-    else {
-      console.log('Inbox view is inactive');
-      $('body').removeClass('iwr-active-view--inbox');
-    }
-
-  });
-});

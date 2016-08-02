@@ -189,6 +189,35 @@ InboxWhenReady.Controllers.AppState = (function () {
     AppState.set('dom', '$actionButtonsContainer', $actionButtonsContainer);
   }
 
+  function startInboxSdkListener() {
+    // We'll integrate more closely with InboxSDK in the near future.
+    //
+    // For now, let's just use it's super helpful view change listener.
+    // This let's us add a class to the body before the view change has
+    // visible effects. That makes our show/hide inbox CSS much simpler.
+
+    var appName = AppState.get('meta', 'name');
+
+    if(appName === 'Gmail') {
+      InboxSDK.load('1.0', 'sdk_inboxwhenready_a2ecee1991').then(function(sdk){
+
+        sdk.Router.handleListRoute(sdk.Router.NativeListRouteIDs.ANY_LIST, function(inboxView) {
+
+          var currentRoute = sdk.Router.getCurrentRouteView();
+          var currentRouteId = currentRoute.getRouteID();
+
+          if(currentRouteId.indexOf('inbox') !== -1) {
+            $('body').addClass('iwr-active-view--inbox');
+          }
+          else {
+            $('body').removeClass('iwr-active-view--inbox');
+          }
+
+        });
+      });
+    }
+  }
+
   function publicSaveInboxLinkLabel() {
     // Save the Inbox label with unread count before we do any DOM manipulation
     var inboxLinkSelector = AppState.get('domSelectors', 'inboxLink');
@@ -201,6 +230,7 @@ InboxWhenReady.Controllers.AppState = (function () {
 
   function publicInit() {
     setAppName();
+    startInboxSdkListener();
     setDomSelectors();
     waitForAppToLoad();
   }
