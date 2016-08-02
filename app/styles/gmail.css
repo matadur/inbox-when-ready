@@ -1,0 +1,83 @@
+/**
+ * This extension supports Gmail and InboxByGmail. The view logic is
+ * similar for both interfaces, but the selectors are different.
+ *
+ * Selector reference
+ *
+ * --- Gmail ---
+ *
+ * .aeF         main area wrapper (contains wrappers for inbox,
+ *              search results, etc)
+ * .ar5         the message count and pagination buttons
+ * .aeN .ajl    left sidebar menu
+ * .aeV .md > div:nth-child(1)      account storage space used (shown
+ *                                  beneath message list)
+ * .aKh          inbox tabs (primary, social, promos etc)
+ * .aE3         inbox messages list
+ * .aDP          inbox messages list
+ * [id=":2o"]    inbox messages list (if inbox tabs are disabled)
+ * .aDM          inbox messages list (if inbox is in unread first mode)
+ *
+ * --- /Gmail ---
+ */
+
+/*
+ * To begin, we hide *all* elements that might give a clue
+ * about inbox status. We must do this before InboxWhenReady loads,
+ * otherwise there might be a brief flash of inbox status clues
+ * just after the app loads.
+ */
+
+.aeF,
+.aKh,
+.aDM,
+.aeN .ajl,
+.ar5 {
+  visibility: hidden !important;
+}
+
+.iwr-active .aeF,
+.iwr-active .aKh,
+.iwr-active .aDM,
+.iwr-active .aeN .ajl,
+.iwr-active .ar5
+{
+  visibility: visible !important;
+}
+
+/**
+ * Hide the inbox by default.
+ */
+
+.iwr-active-view--inbox .aeF,
+.iwr-active-view--inbox .aKh,
+.iwr-active-view--inbox .aDM,
+.iwr-active-view--inbox .ar5 {
+  display: none !important;
+}
+
+/**
+ * Show the inbox when the .iwr-show-email-view class is present on
+ * document body.
+ */
+
+.iwr-active-view--inbox.iwr-show-email-view .aeF,
+.iwr-active-view--inbox.iwr-show-email-view .aKh,
+.iwr-active-view--inbox.iwr-show-email-view .aDM {
+  display: block !important;
+}
+
+/* Display mode for this element must be inline-block, not block. */
+.iwr-active-view--inbox.iwr-show-email-view .ar5 {
+  display: inline-block !important;
+}
+
+/*
+ * Force the show / hide buttons to the same width, to avoid a
+ * jiggle in the other UI buttons on toggle.
+ */
+
+#show_my_inbox .T-I-ax7,
+#hide_my_inbox .T-I-ax7 {
+  min-width: 62px !important;
+}

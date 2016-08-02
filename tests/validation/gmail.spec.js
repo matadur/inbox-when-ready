@@ -116,7 +116,7 @@ describe('Gmail', function() {
 
         browser.url(config.gmail.url + 'mail/u/0/#settings/inbox');
         browser.waitForExist(selectors.settingsTitle, 5000);
-        browser.pause(500);
+        browser.pause(1000);
         browser.selectByVisibleText(selectors.inboxType, inboxMode.label);
 
         if(inboxMode.categories === false) {

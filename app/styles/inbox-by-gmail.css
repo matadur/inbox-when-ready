@@ -1,0 +1,73 @@
+/**
+ * This extension supports Gmail and InboxByGmail. The view logic is
+ * similar for both interfaces, but the selectors are different.
+ *
+ * Selector reference
+ *
+ * --- InboxbyGmail ---
+ *
+ * .tE          main area wrapper
+ * .ay          modifier applied to main area wrapper when on pinned view
+ *
+ * --- /InboxbyGmail ---
+ *
+ */
+
+/*
+ * To begin, we hide *all* elements that might give a clue
+ * about inbox status. We must do this before InboxWhenReady loads,
+ * otherwise there might be a brief flash of inbox status clues
+ * just after the app loads.
+ */
+
+.tE {
+  visibility: hidden !important;
+}
+
+.iwr-active .tE {
+  visibility: visible !important; /* important rules override native view logic */
+}
+
+/**
+ * Hide the inbox by default.
+ */
+
+/* --- InboxByGmail --- */
+.iwr-active-view--inbox .tE {
+  visibility: hidden !important;
+}
+
+/* Do show pinned messages */
+.iwr-active-view--inbox .ay .tE {
+  visibility: visible !important;
+}
+
+/**
+ * Show the inbox when the .iwr-show-email-view class is present on
+ * document body.
+ */
+
+.iwr-show-email-view.iwr-active-view--inbox .tE {
+  visibility: visible !important;
+}
+
+/**
+ * Position the show / hide buttons.
+ */
+
+.iwr-active-view--inbox .c4 > #show_my_inbox,
+.iwr-active-view--inbox .c4 > #hide_my_inbox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  margin-left: -75px;
+  padding: 5px;
+  z-index: 18; /* Compose dialog has z-index 19 */
+  text-align: center;
+}
+
+.iwr-active-view--inbox .c4 > #hide_my_inbox {
+  top: 72px;
+  position: absolute;
+}

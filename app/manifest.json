@@ -27,9 +27,12 @@
         "https://inbox.google.com/*"
       ],
       "css": [
+        "styles/gmail.css",
+        "styles/inbox-by-gmail.css",
         "styles/inbox-when-ready.css"
       ],
       "js": [
+        "inboxsdk.js",
         "scripts/content_scripts/lib/zepto.js",
         "scripts/content_scripts/models/appState.js",
         "scripts/content_scripts/models/extensionState.js",

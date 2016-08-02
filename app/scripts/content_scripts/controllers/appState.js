@@ -46,7 +46,6 @@ InboxWhenReady.Controllers.AppState = (function () {
       AppState.set('domSelectors', 'actionButtonsContainer', { selector : '.aqL' });
       AppState.set('domSelectors', 'actionButtonsWrapper', { selector : '.G-atb' });
       AppState.set('domSelectors', 'inboxCount', { selector : '.Di' });
-
     }
   }
 
@@ -154,9 +153,6 @@ InboxWhenReady.Controllers.AppState = (function () {
       domElements['$' + key] = InboxWhenReady.Utils.getDomElement(element.selector, element.match);
     });
 
-    console.log('Found these DOM elements:');
-    console.log(domElements);
-
     AppState.set(null, 'dom', domElements);
 
     if(appName === 'Gmail') {
@@ -184,7 +180,11 @@ InboxWhenReady.Controllers.AppState = (function () {
       }
     }
 
-    $actionButtonsContainer = InboxWhenReady.Utils.getDomElement(actionButtonsContainerSelector.selector, visibleContainerMatch).childNodes[0].childNodes[0];
+    var $actionButtonsWrapper = InboxWhenReady.Utils.getDomElement(actionButtonsContainerSelector.selector, visibleContainerMatch);
+
+    if($actionButtonsWrapper) {
+      $actionButtonsContainer = $actionButtonsWrapper.childNodes[0].childNodes[0];
+    }
 
     AppState.set('dom', '$actionButtonsContainer', $actionButtonsContainer);
   }
