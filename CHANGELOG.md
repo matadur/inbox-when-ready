@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.16] - 2016-08-02
+### Added
+- A welcome page for first time users.
+- A lot of automated tests for better QA.
+
+### Changed
+- Replaced references to schon.io with inboxwhenready.org.
+- Began refactoring around InboxSDK. This should help with QA, especially over the mid-term.
+
+### Fixed
+- Gmail: extension should initialise properly if Gmail is loaded on a #label view.
+- Inbox by Gmail: inbox should not be briefly visible when switching back to inbox view.
+
 ## [1.1.15] - 2016-07-18
 ### Added
 - Support for Gmail custom views (unread first, starred first, etc)
