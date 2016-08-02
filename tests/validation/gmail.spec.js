@@ -264,6 +264,21 @@ describe('Gmail', function() {
     assert.equal(buttonHideMyInboxIsVisible, true);
   });
 
+  it('Should keep inbox hidden and "show inbox" button visible when app is loaded on settings screen and then switches back to inbox', function () {
+    browser.url(config.gmail.url + 'mail/u/0/#settings/general');
+    browser.pause(300);
+    browser.refresh();
+    browser.waitForExist(selectors.buttonBackToInbox, 10000);
+    browser.click(selectors.buttonBackToInbox);
+    browser.pause(2000);
+
+    var inboxIsVisible = browser.isVisible(selectors.inbox);
+    assert.equal(inboxIsVisible, false);
+
+    var buttonShowMyInboxIsVisible = browser.isVisible(selectors.buttonShowMyInbox);
+    assert.equal(buttonShowMyInboxIsVisible, true);
+  });
+
   it('Message count and pagination buttons should be visible on inbox view when inbox is visible', function () {
     browser.click(selectors.buttonShowMyInbox);
     var paginationButtonsAreVisible = browser.isVisible(selectors.buttonsPagination);
