@@ -25,7 +25,7 @@
 }
 
 .iwr-active .tE {
-  visibility: visible !important; /* important rules override native view logic */
+  //visibility: visible !important;
 }
 
 /**
