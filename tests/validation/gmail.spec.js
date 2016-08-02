@@ -18,6 +18,7 @@ describe('Gmail', function() {
   selectors.buttonFlashMessageSuppressForever = '#iwr_flash_button--suppress_forever';
   selectors.buttonsPagination = '.ar5';
   selectors.buttonSaveSettings = '[guidedhelpid="save_changes_button"]';
+  selectors.inboxToolbarButtons = '.aqL .G-Ni';
   selectors.flashMessage = '.iwr-flash-message';
   selectors.settingsTitle = 'h2.dt';
   selectors.inboxType = '.rtiTxf';
@@ -193,6 +194,33 @@ describe('Gmail', function() {
 
       var hideInboxButtonIsVisible = browser.isVisible(selectors.buttonHideMyInbox);
       assert.equal(hideInboxButtonIsVisible, true);
+    });
+
+    it('Should hide inbox toolbar buttons when inbox is hidden and the inbox view is active', function () {
+      var inboxToolbarButtonsVisibility = browser.isVisible(selectors.inboxToolbarButtons);
+      var visibleInboxToolbarButtons = 0;
+
+      inboxToolbarButtonsVisibility.forEach(function(visible) {
+        if(visible) {
+          visibleInboxToolbarButtons++;
+        }
+      });
+
+      expect(visibleInboxToolbarButtons).to.be.below(3);
+    });
+
+    it('Should show inbox toolbar buttons when inbox is visible and the inbox view is active', function () {
+      browser.click(selectors.buttonShowMyInbox);
+      var inboxToolbarButtonsVisibility = browser.isVisible(selectors.inboxToolbarButtons);
+      var visibleInboxToolbarButtons = 0;
+
+      inboxToolbarButtonsVisibility.forEach(function(visible) {
+        if(visible) {
+          visibleInboxToolbarButtons++;
+        }
+      });
+
+      expect(visibleInboxToolbarButtons).to.be.above(3);
     });
   });
 

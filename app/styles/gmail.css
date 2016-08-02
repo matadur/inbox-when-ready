@@ -56,6 +56,10 @@
   display: none !important;
 }
 
+.iwr-active-view--inbox .aqL .G-Ni {
+  display: none;
+}
+
 /**
  * Show the inbox when the .iwr-show-email-view class is present on
  * document body.
@@ -65,6 +69,10 @@
 .iwr-active-view--inbox.iwr-show-email-view .aKh,
 .iwr-active-view--inbox.iwr-show-email-view .aDM {
   display: block !important;
+}
+
+.iwr-active-view--inbox.iwr-show-email-view .aqL .G-Ni {
+  display: inline-block;
 }
 
 /* Display mode for this element must be inline-block, not block. */
