@@ -35,7 +35,7 @@ chrome.runtime.onMessage.addListener(function( event, sender, sendResponse ) {
   _gaq.push(['_trackEvent', event.category, event.action, event.label, event.value]);
 
   if(!isDevelopmentEnvironment() && event.action === 'Extension loaded for the first time') {
-    chrome.tabs.create({url: 'https://inboxwhenready.org/welcome/'});
+    chrome.tabs.create({url: 'https://inboxwhenready.org/welcome.html'});
   }
 
   sendResponse(event);
