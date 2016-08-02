@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.17] - 2016-08-02
+### Added
+- When inbox is hidden, extension should hide the "select", "refresh" and "more" toolbar buttons enhancement gmail
+
 ## [1.1.16] - 2016-08-02
 ### Added
 - A welcome page for first time users.
