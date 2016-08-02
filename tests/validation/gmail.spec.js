@@ -216,17 +216,6 @@ describe('Gmail', function() {
       expect(mainElementHeight).to.be.above(10);
     });
 
-    it('Should show sent messages if app is loaded on sent messages view', function () {
-      this.timeout(20000); // We're gonna reload the app, so test might take longer than 10 secs.
-      browser.url(config.gmail.url + 'mail/u/0/#sent');
-      browser.pause(300);
-      browser.refresh();
-      browser.waitForExist(selectors.mainArea, 10000);
-
-      var mainElementHeight = browser.getElementSize(selectors.mainArea, 'height');
-      expect(mainElementHeight).to.be.above(10);
-    });
-
     it('Should show compose dialog even if inbox is hidden', function () {
       browser.click(selectors.buttonCompose);
       browser.pause(200);
@@ -270,9 +259,48 @@ describe('Gmail', function() {
 
   describe('Functionality when Gmail is loaded on non-inbox views', function() {
 
+    it('Should show sent messages if app is loaded on sent messages view', function () {
+      this.timeout(20000); // We're gonna reload the app, so test might take longer than 10 secs.
+      browser.url(config.gmail.url + 'mail/u/0/#sent');
+      browser.pause(300);
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+
+      var mainElementHeight = browser.getElementSize(selectors.mainArea, 'height');
+      expect(mainElementHeight).to.be.above(10);
+    });
+
     it('Should make the inbox hidden and the "show" button visible if app is loaded on sent messages view, then navigated back to inbox view.', function () {
       this.timeout(20000); // We're gonna reload the app, so test might take longer than 10 secs.
       browser.url(config.gmail.url + 'mail/u/0/#sent');
+      browser.pause(300);
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+      browser.click(selectors.buttonBackToInbox);
+      browser.waitForExist(selectors.inbox, 10000);
+      browser.pause(1000);
+
+      var showButtonIsVisible = browser.isVisible(selectors.buttonShowMyInbox);
+      var inboxIsVisible = browser.isVisible(selectors.inbox);
+
+      assert.equal(showButtonIsVisible, true);
+      assert.equal(inboxIsVisible, false);
+    });
+
+    it('Should show label messages if app is loaded on label view', function () {
+      this.timeout(20000); // We're gonna reload the app, so test might take longer than 10 secs.
+      browser.url(config.gmail.url + 'mail/u/0/#label/Test');
+      browser.pause(300);
+      browser.refresh();
+      browser.waitForExist(selectors.mainArea, 10000);
+
+      var mainElementHeight = browser.getElementSize(selectors.mainArea, 'height');
+      expect(mainElementHeight).to.be.above(10);
+    });
+
+    it('Should make the inbox hidden and the "show" button visible if app is loaded on label view, then navigated back to inbox view.', function () {
+      this.timeout(20000); // We're gonna reload the app, so test might take longer than 10 secs.
+      browser.url(config.gmail.url + 'mail/u/0/#label/Test');
       browser.pause(300);
       browser.refresh();
       browser.waitForExist(selectors.mainArea, 10000);
