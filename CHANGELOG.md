@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.18] - 2016-08-04
+### Fixed
+- Inbox label should update properly when Inbox Pause extension is active.
+
 ## [1.1.17] - 2016-08-02
 ### Added
 - When inbox is hidden, extension should hide the "select", "refresh" and "more" toolbar buttons enhancement gmail
