@@ -334,7 +334,7 @@ describe('Gmail', function() {
       browser.waitForExist(selectors.mainArea, 10000);
       browser.click(selectors.buttonBackToInbox);
       browser.waitForExist(selectors.inbox, 10000);
-      browser.pause(1000);
+      browser.pause(2000);
 
       var showButtonIsVisible = browser.isVisible(selectors.buttonShowMyInbox);
       var inboxIsVisible = browser.isVisible(selectors.inbox);
