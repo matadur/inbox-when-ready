@@ -42,7 +42,7 @@ InboxWhenReady.Controllers.AppState = (function () {
     }
     else if(AppState.get('meta', 'name') === 'Gmail') {
       AppState.set('domSelectors', 'inboxWrapper', { selector : '.aeF' });
-      AppState.set('domSelectors', 'inboxLink', { selector : 'a[href$="#inbox"]', match : 1 });
+      AppState.set('domSelectors', 'inboxLink', { selector : 'a[href$="#inbox"][target="_top"]' });
       AppState.set('domSelectors', 'actionButtonsContainer', { selector : '.aqL' });
       AppState.set('domSelectors', 'actionButtonsWrapper', { selector : '.G-atb' });
       AppState.set('domSelectors', 'inboxCount', { selector : '.Di' });
