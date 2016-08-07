@@ -35,8 +35,19 @@ InboxWhenReady.App = (function () {
   }
 
   function publicInit() {
-    AppStateController.init();
-    bindListeners();
+    // Gmail users can open email messages in a new window. The loads a special view
+    // called btop. The URL looks something like this:
+    //
+    //   https://mail.google.com/mail/u/0/?ui=2&view=btop&ver=1nnj51jn5rorm&search=inbox&th=1566105b2f12efcb&cvid=3
+    //
+    // There is no need to initialise Inbox When Ready on the btop view.
+
+    var isBtopView = window.location.search.indexOf('view=btop') !== -1;
+
+    if(!isBtopView) {
+      AppStateController.init();
+      bindListeners();
+    }
   }
 
   var publicMethods = {
