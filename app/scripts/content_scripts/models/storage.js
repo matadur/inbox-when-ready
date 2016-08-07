@@ -38,9 +38,6 @@ InboxWhenReady.Models.Storage = (function () {
         // We loaded the user data from storage succesfully.
         // Make it all available locally.
         storage = items;
-
-        console.info('Loaded user data from storage:');
-        console.log(storage);
       }
       else {
         console.error('Could not get data for key "' + key + '" from storage.');
