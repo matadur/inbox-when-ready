@@ -58,6 +58,12 @@
 
 .iwr-flash-message h2 {
   margin-top: 3px;
+  margin-bottom: 12px;
+}
+
+.iwr-flash-message p,
+.iwr-flash-message li {
+  font-size: 14px;
 }
 
 .iwr-flash-message p:last-child {
