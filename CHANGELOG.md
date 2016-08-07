@@ -3,13 +3,22 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.19] - 2016-08-07
+### Changed
+- Extension should not even initialise on btop view.
+- Reduce font size on flash messages.
+
+### Fixed
+- btop view should not be hidden.
+- Flash message links should not be blocked by UBlock Origin et al.
+
 ## [1.1.18] - 2016-08-04
 ### Fixed
 - Inbox label should update properly when Inbox Pause extension is active.
 
 ## [1.1.17] - 2016-08-02
 ### Added
-- When inbox is hidden, extension should hide the "select", "refresh" and "more" toolbar buttons enhancement gmail
+- When inbox is hidden, extension should hide the "select", "refresh" and "more" toolbar buttons.
 
 ## [1.1.16] - 2016-08-02
 ### Added
