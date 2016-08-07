@@ -89,3 +89,21 @@
 #hide_my_inbox .T-I-ax7 {
   min-width: 62px !important;
 }
+
+/*
+ * If the user has browsed directly to
+ * an individual email in Gmail. For example, via a link like:
+ *
+ * https://mail.google.com/mail/u/0/?ui=2&view=btop&ver=1nnj51jn5rorm&search=inbox&th=15110e66fb6fd617&cvid=1
+ */
+
+/* --- Gmail --- */
+
+.xE .aeF,
+.xE .aKh,
+.xE .aDM,
+.xE .aeN .ajl,
+.xE .ar5 {
+  visibility: visible !important;
+}
+/* --- /Gmail --- */
