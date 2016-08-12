@@ -31,12 +31,20 @@ _gaq.push(['_setAccount', gaAccountId]);
   s.parentNode.insertBefore(ga, s);
 })();
 
+chrome.runtime.onInstalled.addListener( function ( details ) {
+
+  if ( details.reason === "install" ) {
+
+    chrome.tabs.create({
+      url: 'https://inboxwhenready.org/welcome.html',
+      active: true
+    });
+  }
+
+});
+
 chrome.runtime.onMessage.addListener(function( event, sender, sendResponse ) {
   _gaq.push(['_trackEvent', event.category, event.action, event.label, event.value]);
-
-  if(!isDevelopmentEnvironment() && event.action === 'Extension loaded for the first time') {
-    chrome.tabs.create({url: 'https://inboxwhenready.org/welcome.html'});
-  }
 
   sendResponse(event);
 });
