@@ -43,6 +43,14 @@ chrome.runtime.onInstalled.addListener( function ( details ) {
 
 });
 
+chrome.tabs.query({ url: "https://mail.google.com/*" }, function ( tabs ) {
+
+  tabs.forEach( function ( tab ) {
+    chrome.tabs.reload( tab.id );
+  });
+
+});
+
 chrome.runtime.onMessage.addListener(function( event, sender, sendResponse ) {
   _gaq.push(['_trackEvent', event.category, event.action, event.label, event.value]);
 
